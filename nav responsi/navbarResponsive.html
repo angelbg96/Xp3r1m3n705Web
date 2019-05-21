@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximun-scale=1, minimun-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="estilosNav.css">
+	<title>Menú bonito :3</title>
+</head>
+<body>
+	<nav>
+		<button class="nav-boton" onclick="accion()">Menú</button>
+		<a href="#" class="nav-enlace desaparece">Nosotros</a>
+		<a href="#" class="nav-enlace desaparece">Inicio</a>
+		<a href="#" class="nav-enlace desaparece">Servicios</a>
+		<a href="#" class="nav-enlace desaparece">Contacto</a>
+	</nav>
+
+	<script type="text/javascript">
+		function accion(){
+			console.log("funcionando");
+			var enlace = document.getElementsByClassName('nav-enlace');
+			for (var i = 0; i < enlace.length; i++) {
+				enlace[i].classList.toggle("desaparece");
+			}
+		}
+	</script>
+</body>
+</html>

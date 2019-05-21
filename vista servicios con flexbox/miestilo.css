@@ -1,0 +1,169 @@
+ body{
+    background: #f8f6f6;
+    font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+#seccionTitulo {
+    height: 326px;
+    width: 100%;
+    padding: 20px 5px;
+    color: white;
+    background-color: black;
+    background-image: url("Images/Hands.svg");
+    background-position: center 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-flow: column nowrap;     /* flex-direction: column; flex-wrap: wrap; */
+    justify-content: space-around;
+}
+#seccionTitulo h2{
+    text-align: center;
+    font-size: 80px;
+}
+#seccionTitulo>div{
+    display: flex;
+    /* flex-flow: row nowrap; */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+#seccionTitulo a{
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    display: block;
+    flex-grow: 1;
+}
+.separador {
+    width: 80%;
+    height: 6px;
+    background: #67b4e9;
+    border: 0;
+    margin-bottom: 30px;
+}
+#seccionTitulo .separador{
+    width: 60%;
+    margin-bottom: 0;
+}
+
+#asesoria{
+    margin-top: 40px;
+    padding: 5% 0;
+    background-color: black;
+    background-image: url("Images/Ae14.svg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#asesoria>div{
+    width: 55%;
+    background: white;
+    margin-left: 4%;
+    padding: 2%;
+    font-size: 20px;
+    text-align: justify;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+#asesoria h2{
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+}
+#asesoria div div{
+    padding: 0px 10%;
+}
+#asesoria2{
+    margin-top: 40px;
+    padding: 5% 3%;
+    background-color: black;
+    background-image: url("Images/Ae15.svg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: end;
+}
+#asesoria2>div{
+    width: 50%;
+    background: white;
+    padding: 2%;
+    font-size: 20px;
+    text-align: justify;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+#asesoria2 h2{
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+}
+#asesoria2 div div{
+    padding: 0px 7%;
+}
+
+#asesoriaFin{
+    margin: 0 auto;
+    margin-top: 40px;
+    padding: 2%;
+    background: white;
+    width: 80%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+#asesoriaFin div{
+    padding: 0px 7%;
+}
+#asesoriaFin h2{
+    margin: 0;
+    text-align: center;
+    font-size: 35px;
+}
+#asesoriaFin li{
+    text-align: justify;
+}
+#asesoriaFin nav{
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row nowrap;     /* flex-direction: column; flex-wrap: wrap; */
+    justify-content: center;
+}
+#asesoriaFin nav a{
+    text-align: center;
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    display: block;
+    flex-grow: 1;
+}
+#asesoriaFin nav a:hover{
+    color: white;
+    background: #67b4e9;
+}
+#asesoriaFin .actual{
+    color: white;
+    background: dodgerblue;
+}
+#asesoriaFin .listado{
+    padding: 15px 0;
+    width: 95%;
+    margin: 0 auto;
+    background: #ecf5fc;
+    display: none;
+}
+#asesoriaFin .lista-Act{
+    display: block;
+}
+#asesoriaFin .listado ul {
+    padding-left: 35px;
+    padding-right: 20px;
+    margin: 0;
+}
+#asesoriaFin .listado li {
+    text-align: justify;
+    font-size: 17;
+}

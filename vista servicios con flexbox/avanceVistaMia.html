@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="Lakmi/Favicon_1.png">
+  <link rel="stylesheet" href="miestilo.css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Oswald:200,300,400,500,600,700"
+    rel="stylesheet">
+  <title>Servicios</title>
+  <script>
+        function muestra(evt,elemento){
+            evt.preventDefault();
+			var enlace = document.getElementsByClassName("listado");
+            var reset = document.getElementsByClassName("actual");
+            reset[0].classList.toggle("actual");
+            evt.srcElement.classList.toggle("actual");
+            for(var index = 0; index < enlace.length; index++){
+                if(index+1 == elemento)
+                    enlace[index].classList.add("lista-Act");
+                else enlace[index].classList.remove("lista-Act");
+            }
+		}
+    </script>
+</head>
+
+<body>
+    <section id="seccionTitulo">
+        <h2>Servicios</h2>
+        <div>
+            <a href="">Nuestra oferta de valor</a>
+            <a href="">Áreas especializadas <hr class="separador"></a>
+            <a href="">Entregables</a>
+        </div>
+    </section>
+
+    <section>
+
+    </section>
+
+    <section id="asesoria">
+        <div>
+            <h2>Asesoría y consultoría en control interno asociado a la información financiera interna</h2>
+            <hr class="separador">
+            <div>
+                <ol type="a">
+                    <li>Controles asociados a la elaboración de información financiera proyectada</li>
+                    <li>Controles asociados a la elaboración de información financiera proforma</li>
+                    <li>Controles asociados a reportes específicos usados por la administración</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="asesoriaFin">
+        <h2>Asesoría y consultoría en control interno de informes financieros externos</h2>
+        <hr class="separador">
+        <nav>
+            <a href="#" class="actual" onclick="muestra(event,1)">Consultoría de controles asociados a la preparación de los estados financieros básicos</a>
+            <a href="#" onclick="muestra(event,2)">Consultoría de controles asociados a revelaciones específicas de los estados financieros</a>
+            <a href="#" onclick="muestra(event,3)">Consultoría de controles asociados a rubros específicos de los estados financieros</a>
+        </nav>
+        <div class="listado lista-Act">
+            <ul>
+                <li>Aplicación de cambios contables con tratamiento retrospectivo y correcciones de errores</li>
+                <li>Aplicación de cambios contables con tratamiento prospectivo</li>
+                <li>Evaluación de la procedencia de la compensación de activos y pasivos financieros</li>
+                <li>Identificación de operaciones extranjeras</li>
+                <li>Identificación de la moneda funcional, de informe y de registro</li>
+                <li>Conversión de la moneda de registro a la funcional</li>
+                <li>Conversión de la moneda funcional a la de informe</li>
+                <li>Evaluación de entorno económico como inflacionario o no inflacionario</li>
+                <li>Conversión de estados financieros por cambios de moneda de registro, funcional y de informe</li>
+                <li>Consolidación de operaciones extranjeras</li>
+                <li>Reconocimiento de disposiciones de operaciones extranjeras</li>
+                <li>Identificación de control en una participada</li>
+                <li>Preparación de los requisitos de la consolidación de estados financieros</li>
+                <li>Implementación del procedimiento de la consolidación de estados financieros</li>
+                <li>Evaluación de efectos por cambios en el porcentaje de participación</li>
+                <li>Evaluación de efectos por pérdida de control</li>
+                <li>Evaluación la posibilidad de ejercer la opción para no presentar estados financieros consolidados</li>
+                <li>Implementación del procedimiento de combinación de estados financieros</li>
+            </ul>
+        </div>
+        <div class="listado">
+            <ul>
+                <li>Identificación de partes relacionadas de la entidad informante</li>
+                <li>Evaluación del cumplimiento de revelaciones requeridas de partes relacionadas</li>
+                <li>Identificación de segmentos sujetos a informar</li>
+                <li>Preparación de información a revelar por segmentos</li>
+                <li>Aplicación de cambios en la estructura de la organización de la entidad</li>
+                <li>Identificación de hechos posteriores a la fecha de los estados financieros que requieren ajuste y
+                revelación</li>
+                <li>Evaluación de negocio en marcha</li>
+                <li>Identificación de hechos posteriores a la fecha de los estados financieros que sólo requieren
+                revelación
+                </li>
+            </ul>
+        </div>
+        <div class="listado">
+            <ul>
+                <li>Identificación y clasificación de equivalentes de efectivo</li>
+                <li>Identificación y clasificación de efectivo y equivalentes de efectivo restringidos</li>
+                <li>Clasificación de instrumentos financieros</li>
+                <li>Determinación el modelo de negocio utilizado para la administración de equivalentes de efectivo,
+                cuentas
+                por cobrar e inversiones en instrumentos financieros</li>
+                <li>Evaluación de los requisitos para reclasificar instrumentos financieros</li>
+                <li>Evaluación de los efectos de reclasificaciones en la valuación de instrumentos financieros</li>
+                <li>Reconocimiento inicial de Instrumentos Financieros para Cobrar Principal e Interés (IFCPI)</li>
+                <li>Reconocimiento mediante costo amortizado de Instrumentos Financieros para Cobrar Principal e Interés
+                (IFCPI)</li>
+                <li>Efectos de liquidación de cuentas por cobrar e IFCPI mediante adjudicación o dación en pago de
+                activos
+                </li>
+                <li>Evaluación del costo y el valor neto de realización de inventarios</li>
+                <li>Definición del método de valuación de inventarios más apropiado</li>
+                <li>Definición de la fórmula de asignación del costo más apropiada para el reconocimiento posterior de
+                inventarios</li>
+                <li>Evaluación de pérdidas por deterioro de pagos anticipados</li>
+                <li>Evaluación de cumplimiento de las condiciones para el reconocimiento de una erogación como activo
+                </li>
+                <li>Identificación de componentes de propiedades, planta y equipo</li>
+                <li>Integración del costo de adquisición de activos</li>
+                <li>Evaluación de los efectos por modificaciones al costo inicial de activos</li>
+                <li>Preparación del esquema de depreciación y elección del método de depreciación</li>
+                <li>Reconocimiento del efecto de las bajas de propiedades, planta y equipo</li>
+                <li>Clasificación de inversiones permanentes</li>
+                <li>Identificación de entidades estructuradas</li>
+                <li>Evaluación de influencia significativa y control conjunto</li>
+                <li>Reconocimiento inicial de inversiones permanentes</li>
+                <li>Reconocimiento posterior de inversiones permanentes a costo o método de participación</li>
+                <li>Identificación de activos intangibles con costo o activos gratuitos</li>
+                <li>Evaluación de la forma de adquisición de un activo intangible</li>
+                <li>Asociación de costos relacionados con la fase de investigación y la fase de desarrollo</li>
+                <li>Evaluación de la vida útil de activos intangibles</li>
+                <li>Diferenciación entre pasivos, provisiones, contingencias y compromisos</li>
+                <li>Identificación del momento de reconocimiento de provisiones</li>
+                <li>Reconocimiento inicial y posterior de provisiones</li>
+                <li>Identificación y reconocimiento de contingencias</li>
+                <li>Identificación y reconocimiento de compromisos</li>
+                <li>Identificación de las características y condiciones de un instrumento financiero de pasivo o de
+                capital
+                </li>
+                <li>1Presentación de un instrumento financiero de pasivo o de capital</li>
+                <li>Clasificación de los componentes de pasivo y de capital, de un instrumento financiero compuesto</li>
+            </ul>
+        </div>
+        
+    </section>
+
+    <section id="asesoria2">
+        <div>
+            <h2>Asesoría y consultoría en control interno asociado al cumplimento fiscal</h2>
+            <hr class="separador">
+            <div>
+                <ul>
+                    <li>Diagnóstico fiscal
+                        <ol type="a">
+                            <li>Determinación de las obligaciones fiscales a que se está sujeto</li>
+                        </ol>
+                    </li>
+                    <li>Controles asociados al cumplimiento de obligaciones fiscales
+                        <ol type="a">
+                            <li>Declaraciones de pago de impuestos</li>
+                            <li>Declaraciones informativas de impuestos</li>
+                            <li>Contabilidad electrónica</li>
+                            <li>Controles asociados a facturación</li>
+                            <li>Controles asociados otras obligaciones fiscales</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    
+</body>
+</html>
