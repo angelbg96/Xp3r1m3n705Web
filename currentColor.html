@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Uso de current color</title>
+    <style>
+        article {
+            color: hsl(0,100,50);
+            width: 50%;
+            margin: 2em auto;
+            border: 1px solid currentcolor;
+            padding: 1em;
+            animation: color 5s infinite alternate;
+        }
+  
+        .title {
+            margin: 0;
+        }
+        
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: currentcolor;
+            border: 1px solid currentcolor;
+            padding: .5em 1em;
+        }
+
+        @keyframes color {
+            25% {
+                color: hsl(45,100,50);
+            }
+            
+            50% {
+                color: hsl(90,100,50);
+            }
+            
+            75% {
+                color: hsl(45,100,50);
+            }
+            
+            100% {
+                color: hsl(180,100,50);
+            }
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h2 class="title">Titulo</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas feugiat dolor. Quisque eget eros quis neque egestas ultricies. Aliquam porttitor metus ut egestas consequat.</p>
+        <a href="#">Leer más</a>
+    </article>
+</body>
+</html>
