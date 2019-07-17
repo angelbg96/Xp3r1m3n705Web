@@ -7,7 +7,7 @@ let div = `
     </div
 `
 /* Inserta el codigo en el documento HTML */
-document.body.innerHTML = div;
+document.body.innerHTML += div;
 
 let answer = prompt("Escribe la capital de México:").toUpperCase().trim()
 
