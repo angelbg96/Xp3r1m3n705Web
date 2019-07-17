@@ -1,5 +1,5 @@
-let number = 18
-let nombre = `yo soy mayor de edad (> ${number} años)`
+let number = 6
+let nombre = `Experimentando con ECMAScript ${number}`
 
 let div = `
     <div class="container">
