@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slideshow</title>
+
+    <style>
+        *, *::before, *::after{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        :root{
+            font-family: Arial, Helvetica, sans-serif;
+            --width-slider: 98vw;
+        }
+        body{
+            background-color: darkgrey;
+        }
+        /* Estilos de SlideShow */
+        .slideshow{
+            width: var(--width-slider);
+            margin-left: auto;
+            margin-right: auto;
+            cursor: default;
+            position: relative;
+            z-index: 10;
+        }
+        /* Estilos del carrusel de imagenes */
+        .slide-contain-items{
+            list-style: none;
+            /* margin-left: auto;
+            margin-right: auto; */
+            width: 100%;
+            height: calc(var(--width-slider) * 9 / 24);
+            overflow: hidden;
+            position: relative;
+            z-index: 20;
+        }
+        .slide-item, .slide-img{
+            width: 100%;
+            height: 100%;
+        }
+        /* Estilos para las tarjetas */
+        .container-titles, .slide-arts{
+            color: white;
+            position: absolute;
+            left: 2%;
+        }
+        .slide-arts, .slide-titles{
+            overflow: hidden;
+            z-index: 20;
+        }
+        .slide-titles{
+            list-style: none;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        .container-titles{
+            width: 40%;
+            height: calc(12px + 2em); /* cambiar cantidad de px si cambia el px en .slide-title */
+            z-index: 20;
+            top: 57%;
+        }
+        .slide-title{
+            font-size: 12px;
+            padding: 1em;
+            width: 100%;
+            background-color: #01aef0;
+        }
+        .slide-arts{
+            font-size: 18px;
+            width: 50%;
+            height: 5em;    /* Calculado para 3 renglones más un renglón de padding superior e inferior */
+            top: 70%;
+        }
+        .slide-art{
+            width: 100%;
+            height: 100%;
+            padding: 1em;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+        }
+         
+        /* Estilos para todos los elementos del carrusel */
+        .slide-item, .slide-title, .slide-art{
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 100%;
+            transition: left 1s linear;
+            visibility: hidden;
+        }
+        /* clases que generan las transiciones en slider */
+        .slide-prev{
+            left: -100%;
+            z-index: 100;
+            visibility: visible;
+        }
+        .slide-active{
+            left: 0;
+            z-index: 100;
+            visibility: visible;
+        }
+        /* Elementos con pseudoclases */
+        .container-titles::after{
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            z-index: 20;
+            border-right: 3em solid transparent;
+            border-bottom: 2.8em solid #01aef0;
+        } 
+    </style>
+</head>
+<body>
+    <div class="slideshow">
+        <ul class="slide-contain-items">
+            <li class="slide-item slide-active"><img class="slide-img" src="01.jpg" alt=""></li>
+            <li class="slide-item"><img class="slide-img" src="02.jpg" alt=""></li>
+            <li class="slide-item"><img class="slide-img" src="03.jpg" alt=""></li>
+            <li class="slide-item"><img class="slide-img" src="04.jpg" alt=""></li>
+        </ul>
+        <div class="container-titles">
+            <ul class="slide-titles">
+                <li class="slide-title slide-active">
+                    <h2>Título de categoría 1</h2>
+                </li>
+                <li class="slide-title">
+                    <h2>Título de categoría 2</h2>
+                </li>
+            </ul>
+        </div>
+        <div class="slide-arts">
+            <article class="slide-art slide-active">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                    Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum.
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    Aliquam quo et mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum. <br>
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ducimus recusandae porro obcaecati blanditiis dolorum.
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    2. Lorem ipsum ducimus recusandae porro obcaecati amet  elit. 
+                    Culpa non, dolor sit  consectetur adipisicing blanditiis dolorum.
+                </p>
+            </article>
+        </div>
+    </div>
+
+    <div style="margin-top: 200px; padding:2em;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum suscipit earum id impedit a quaerat qui, molestiae maxime temporibus voluptatibus accusantium quidem officiis, necessitatibus alias, tempore perspiciatis eveniet laudantium! Rem sapiente porro eius, sequi exercitationem nam, nihil aut, optio modi quasi corporis itaque error magnam minus mollitia iure nemo ut ipsam blanditiis nobis aperiam! Quod soluta deserunt nihil expedita assumenda ducimus maiores quaerat, est asperiores, sint aliquam quibusdam voluptate quidem nesciunt consequatur eum, porro optio vitae. Illo eligendi soluta odit deserunt laudantium libero ea cum voluptas explicabo nam ratione doloremque alias aspernatur, ullam cupiditate itaque quae fuga repellat, modi hic eos aliquam. Aut sint dolorem provident temporibus dolor optio ipsum adipisci delectus, pariatur eveniet earum tempora eos cupiditate sequi sunt sed deleniti. Laudantium assumenda aut impedit vitae, necessitatibus sint illo reprehenderit soluta commodi blanditiis sunt ullam magni quam eaque voluptas reiciendis ex ad hic amet! Laudantium unde molestias rem ullam, tempore maiores ipsa perferendis nam necessitatibus commodi voluptate delectus, modi voluptatibus quod. Impedit doloribus nam, repellendus veritatis fuga voluptatibus maxime itaque voluptates. Repudiandae fugit fugiat deleniti odit blanditiis error debitis cumque magni facere accusamus similique architecto, aut earum numquam nisi temporibus magnam, officiis adipisci corrupti! Saepe, voluptatibus. Iste labore magni illum eveniet accusamus suscipit voluptatem fugit itaque excepturi aperiam dicta, error fugiat atque at quasi porro vero voluptas dolor qui similique obcaecati impedit natus, pariatur necessitatibus? Placeat inventore laborum vero qui tempora voluptatem tenetur laudantium deleniti eligendi saepe nam labore, omnis expedita culpa ipsum quia veritatis iste fugiat? Dolorem minus qui beatae, modi perspiciatis suscipit voluptates velit a, recusandae asperiores numquam ad itaque necessitatibus commodi quos nemo sapiente nihil, aliquam sit accusantium! Consequuntur blanditiis repudiandae, quibusdam quod expedita alias incidunt error mollitia neque sint facere eius consectetur ab tempora exercitationem repellendus ut. Praesentium sapiente inventore nemo, animi voluptate impedit reprehenderit?</div>
+    
+    <script>
+        let count = 0,
+            n = 0,
+            timeInterval = 5000,
+            elemenTitle = document.querySelector('.slide-titles'),
+            itemsBG = [... document.querySelectorAll('.slide-item')],
+            itemsTitle = [... document.querySelectorAll('.slide-title')],
+            itemsArt = [... document.querySelectorAll('.slide-art')]
+        if(itemsBG != null && itemsTitle != null && itemsArt != null && elemenTitle != null){
+            n = itemsBG.length
+
+            elemenTitle.addEventListener('transitionend',e => {
+                console.log(e.target)
+                if(count == 0 || count == 3)
+                    e.target.classList.remove('slide-prev')
+            })
+
+            setInterval(()=>{
+                if(count == 0){
+                    itemsBG[n-1].classList.remove('slide-prev')
+                    itemsArt[n-1].classList.remove('slide-prev')
+                }
+                else{
+                    itemsBG[count-1].classList.remove('slide-prev')
+                    itemsArt[count-1].classList.remove('slide-prev')
+                }
+                itemsBG[count].classList.add('slide-prev')
+                itemsBG[count].classList.remove('slide-active')
+                itemsArt[count].classList.add('slide-prev')
+                itemsArt[count].classList.remove('slide-active')
+                if(count == n - 1){
+                    count = -1
+                    itemsTitle[0].classList.add('slide-active')
+                    itemsTitle[1].classList.remove('slide-active')
+                    itemsTitle[1].classList.add('slide-prev')
+                }
+                /* Para el cambio en  los titulos */
+                else if(count == 2){
+                    itemsTitle[0].classList.add('slide-prev')
+                    itemsTitle[0].classList.remove('slide-active')
+                    itemsTitle[1].classList.add('slide-active')
+                }
+                itemsBG[++count].classList.add('slide-active')
+                itemsArt[count].classList.add('slide-active')
+            },timeInterval)
+        }
+    </script>
+</body>
+</html>
