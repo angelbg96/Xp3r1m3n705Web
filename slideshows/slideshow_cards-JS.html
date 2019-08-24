@@ -43,6 +43,33 @@
             width: 100%;
             height: 100%;
         }
+        /* Indicadores */
+        .container-indicators{
+            padding: 0.8em;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            z-index: 20;
+            bottom: 0;
+        }
+        .slide-indicators{
+            list-style: none;
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0;
+        }
+        .slide-indicator{
+            padding: 0.5em;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: background-color 0.8s ease-in;
+        }
+        .indicator-active{
+            background-color: var(--title-blue-color);
+        }
         /* Estilos para las tarjetas */
         .container-titles, .slide-arts{
             color: white;
@@ -106,6 +133,12 @@
             z-index: 100;
             visibility: visible;
         }
+        .slide-art p, .slide-title h2{
+            margin-bottom: 0;
+        }
+        .slide-title h2{
+            font-size: 1em;
+        }
         /* Elementos con pseudoclases */
         .container-titles::after{
             content: '';
@@ -116,7 +149,80 @@
             z-index: 20;
             border-right: 3em solid transparent;
             border-bottom: 2.8em solid #01aef0;
-        } 
+        }
+         /* Responsive Web Design */
+         @media(max-width:1200px){
+            .container-titles{
+                width: 32%;
+            }
+            .slide-title{
+                padding: 0.6em 0.8em;
+            }
+        }
+        @media(max-width:1024px){
+            .container-titles{
+                font-size: 0.87em;
+                width: 34%;
+            }
+            .slide-arts{
+                font-size: 0.9em;
+            }
+            .slide-art:nth-of-type(5){
+                font-size: 0.9em;
+            }
+        }
+        @media (max-width:768px){
+            .slide-contain-items{
+                height: calc(var(--width-slider) * 9 / 18);
+            }
+            .container-titles{
+                width: 38%;
+                bottom: 160px;
+            }
+            .slide-arts{
+                font-size: 0.75em;
+                width: 55%;
+            }
+            .slide-art:nth-of-type(5){
+                font-size: 0.9em;
+            }
+        }
+        @media (max-width:574px){
+            .container-titles{
+                font-size: 0.76em;
+                width: 45%;
+            }
+            .slide-indicators{
+                width: 40%;
+            }
+            .slide-arts{
+                font-size: 0.75em;
+                width: 70%;
+            }
+            .slide-art:nth-of-type(5){
+                font-size: 0.9em;
+            }
+        }
+         @media (max-width:414px){
+            .slide-contain-items{
+                height: calc(var(--width-slider) * 9 / 14);
+            }
+            .slide-indicators{
+                width: 55%;
+            }
+            .container-titles{
+                font-size: 0.76em;
+                width: 60%;
+                bottom: 140px;
+            }
+            .slide-arts{
+                font-size: 0.7em;
+                width: 85%;
+            }
+            .slide-art:nth-of-type(5){
+                font-size: 0.9em;
+            }
+         }
     </style>
 </head>
 <body>
@@ -174,8 +280,9 @@
             elemenTitle = document.querySelector('.slide-titles'),
             itemsBG = [... document.querySelectorAll('.slide-item')],
             itemsTitle = [... document.querySelectorAll('.slide-title')],
-            itemsArt = [... document.querySelectorAll('.slide-art')]
-        if(itemsBG != null && itemsTitle != null && itemsArt != null && elemenTitle != null){
+            itemsArt = [... document.querySelectorAll('.slide-art')],
+            itemsInd = [... document.querySelectorAll('.slide-indicator')]
+        if(itemsBG && itemsTitle && itemsArt && elemenTitle && itemsInd){
             n = itemsBG.length
 
             elemenTitle.addEventListener('transitionend',e => {
@@ -197,6 +304,7 @@
                 itemsBG[count].classList.remove('slide-active')
                 itemsArt[count].classList.add('slide-prev')
                 itemsArt[count].classList.remove('slide-active')
+                itemsInd[count].classList.remove('indicator-active')
                 if(count == n - 1){
                     count = -1
                     itemsTitle[0].classList.add('slide-active')
@@ -211,6 +319,7 @@
                 }
                 itemsBG[++count].classList.add('slide-active')
                 itemsArt[count].classList.add('slide-active')
+                itemsInd[count].classList.add('indicator-active')
             },timeInterval)
         }
     </script>
