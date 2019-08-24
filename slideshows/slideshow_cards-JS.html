@@ -18,6 +18,7 @@
         }
         body{
             background-color: darkgrey;
+            font-size:20px;
         }
         /* Estilos de SlideShow */
         .slideshow{
@@ -68,7 +69,7 @@
             transition: background-color 0.8s ease-in;
         }
         .indicator-active{
-            background-color: var(--title-blue-color);
+            background-color: #01aef0;
         }
         /* Estilos para las tarjetas */
         .container-titles, .slide-arts{
@@ -85,29 +86,33 @@
             height: 100%;
             width: 100%;
             position: absolute;
+            margin: 0;
         }
         .container-titles{
+            font-size: 1.11em;
             width: 40%;
-            height: calc(12px + 2em); /* cambiar cantidad de px si cambia el px en .slide-title */
+            height: calc((1.11em + 0.6em)*2); /* cambiar cantidad de px si cambia el px en .slide-title */
             z-index: 20;
-            top: 57%;
+            bottom: 200px;
         }
         .slide-title{
-            font-size: 12px;
-            padding: 1em;
+            padding: 0.6em 1em;
             width: 100%;
+            height: 100%;
             background-color: #01aef0;
+            display: flex;
+            align-items: center;
         }
         .slide-arts{
-            font-size: 18px;
+            font-size: 0.9em;
             width: 50%;
-            height: 5em;    /* Calculado para 3 renglones más un renglón de padding superior e inferior */
-            top: 70%;
+            height: 6em;    /* Calculado para 3 renglones más un renglón de padding superior e inferior */
+            bottom: 70px;
         }
         .slide-art{
             width: 100%;
             height: 100%;
-            padding: 1em;
+            padding: 1em 1.2em;
             background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
@@ -130,7 +135,7 @@
         }
         .slide-active{
             left: 0;
-            z-index: 100;
+            z-index: 110;
             visibility: visible;
         }
         .slide-art p, .slide-title h2{
@@ -148,7 +153,7 @@
             left: 100%;
             z-index: 20;
             border-right: 3em solid transparent;
-            border-bottom: 2.8em solid #01aef0;
+            border-bottom: calc((1.11em + 0.6em)*2 + 0.03em) solid #01aef0;
         }
          /* Responsive Web Design */
          @media(max-width:1200px){
@@ -167,9 +172,6 @@
             .slide-arts{
                 font-size: 0.9em;
             }
-            .slide-art:nth-of-type(5){
-                font-size: 0.9em;
-            }
         }
         @media (max-width:768px){
             .slide-contain-items{
@@ -183,9 +185,6 @@
                 font-size: 0.75em;
                 width: 55%;
             }
-            .slide-art:nth-of-type(5){
-                font-size: 0.9em;
-            }
         }
         @media (max-width:574px){
             .container-titles{
@@ -198,9 +197,6 @@
             .slide-arts{
                 font-size: 0.75em;
                 width: 70%;
-            }
-            .slide-art:nth-of-type(5){
-                font-size: 0.9em;
             }
         }
          @media (max-width:414px){
@@ -218,9 +214,6 @@
             .slide-arts{
                 font-size: 0.7em;
                 width: 85%;
-            }
-            .slide-art:nth-of-type(5){
-                font-size: 0.9em;
             }
          }
     </style>
@@ -270,15 +263,15 @@
             </article>
         </div>
         <div class="container-indicators">
-               <ol class="slide-indicators">
-                  <li class="slide-indicator indicator-active"></li>
-                  <li class="slide-indicator"></li>
-                  <li class="slide-indicator"></li>
-                  <li class="slide-indicator"></li>
-                  <li class="slide-indicator"></li>
-                  <li class="slide-indicator"></li>
-               </ol>
-            </div>
+           <ol class="slide-indicators">
+              <li class="slide-indicator indicator-active"></li>
+              <li class="slide-indicator"></li>
+              <li class="slide-indicator"></li>
+              <li class="slide-indicator"></li>
+              <li class="slide-indicator"></li>
+              <li class="slide-indicator"></li>
+           </ol>
+        </div>
     </div>
 
     <div style="margin-top: 200px; padding:2em;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum suscipit earum id impedit a quaerat qui, molestiae maxime temporibus voluptatibus accusantium quidem officiis, necessitatibus alias, tempore perspiciatis eveniet laudantium! Rem sapiente porro eius, sequi exercitationem nam, nihil aut, optio modi quasi corporis itaque error magnam minus mollitia iure nemo ut ipsam blanditiis nobis aperiam! Quod soluta deserunt nihil expedita assumenda ducimus maiores quaerat, est asperiores, sint aliquam quibusdam voluptate quidem nesciunt consequatur eum, porro optio vitae. Illo eligendi soluta odit deserunt laudantium libero ea cum voluptas explicabo nam ratione doloremque alias aspernatur, ullam cupiditate itaque quae fuga repellat, modi hic eos aliquam. Aut sint dolorem provident temporibus dolor optio ipsum adipisci delectus, pariatur eveniet earum tempora eos cupiditate sequi sunt sed deleniti. Laudantium assumenda aut impedit vitae, necessitatibus sint illo reprehenderit soluta commodi blanditiis sunt ullam magni quam eaque voluptas reiciendis ex ad hic amet! Laudantium unde molestias rem ullam, tempore maiores ipsa perferendis nam necessitatibus commodi voluptate delectus, modi voluptatibus quod. Impedit doloribus nam, repellendus veritatis fuga voluptatibus maxime itaque voluptates. Repudiandae fugit fugiat deleniti odit blanditiis error debitis cumque magni facere accusamus similique architecto, aut earum numquam nisi temporibus magnam, officiis adipisci corrupti! Saepe, voluptatibus. Iste labore magni illum eveniet accusamus suscipit voluptatem fugit itaque excepturi aperiam dicta, error fugiat atque at quasi porro vero voluptas dolor qui similique obcaecati impedit natus, pariatur necessitatibus? Placeat inventore laborum vero qui tempora voluptatem tenetur laudantium deleniti eligendi saepe nam labore, omnis expedita culpa ipsum quia veritatis iste fugiat? Dolorem minus qui beatae, modi perspiciatis suscipit voluptates velit a, recusandae asperiores numquam ad itaque necessitatibus commodi quos nemo sapiente nihil, aliquam sit accusantium! Consequuntur blanditiis repudiandae, quibusdam quod expedita alias incidunt error mollitia neque sint facere eius consectetur ab tempora exercitationem repellendus ut. Praesentium sapiente inventore nemo, animi voluptate impedit reprehenderit?</div>
