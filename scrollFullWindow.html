@@ -166,16 +166,13 @@
 
 
     <script>
-        if( location.hash.length === 0) location.hash = 'sec-1'
-
-        const scrollSec = document.getElementById('scroll-container'),
-              navSec = document.getElementById('nav-content')
-        if(scrollSec === null || scrollSec === undefined)
-            console.warn('El contenedor padre no existe en el DOM')
-        else {
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollSec = document.getElementById('scroll-container'),
+                navSec = document.getElementById('nav-content')
+            if(scrollSec === null || scrollSec === undefined)
+                throw 'El contenedor padre no existe en el DOM'
             let wheelNow = 0,
                 secChilds = [... scrollSec.children],
-                yLast = null,
                 scrollRun = false
             const scrollCheck = (secView, scrollSill = 8) => {
                 if(Math.abs(wheelNow) < scrollSill) return
@@ -198,10 +195,6 @@
                             : 'show-sec-top' // ver contenido superior
                 secChilds[toNext].classList.add(classNext)
             }
-            const touchReset = () => {
-                yLast = null
-                wheelNow = 0
-            }
             scrollSec.addEventListener('wheel', e => {
                 wheelNow += e.deltaY
                 scrollCheck(e.target)
@@ -212,30 +205,30 @@
                 wheelNow = 0
                 scrollRun = false
             })
-            scrollSec.addEventListener('touchstart', touchReset)
-            scrollSec.addEventListener('touchend', touchReset)
-            scrollSec.addEventListener('touchmove', e => {
-                if(yLast !== null){
-                    wheelNow += yLast - Math.floor(e.touches[0].pageY)
-                    scrollCheck(e.target, 100)
-                }
-                yLast = Math.floor(e.touches[0].pageY)
+            scrollSec.addEventListener('touchstart', e => {
+                wheelNow = Math.floor(e.touches[0].pageY)
+            })
+            scrollSec.addEventListener('touchend', e => {
+                wheelNow -= Math.floor(e.changedTouches[0].pageY)
+                scrollCheck(secChilds.find(el => el.id === location.hash.slice(1)), 100)                
             })
             
             if(navSec !== null || navSec !== undefined){
+                let navChilds = [... navSec.querySelectorAll('[href]')]
+                if(navChilds.length !== secChilds.length)
+                    throw 'cantidad de elemento en el contenedor no coincide con los enlaces en la barra de navegacion'
                 navSec.addEventListener('click', e => {
                     e.stopPropagation()
-                    if(e.target.getAttribute('href') === null ||
-                    [... scrollSec.children].findIndex(el => el.id === location.hash.slice(1))
-                    === [... navSec.children].indexOf(e.target)) return
-                    e.preventDefault()
-                    toNextSection([... scrollSec.children]
-                            .findIndex(el => el.id === location.hash.slice(1)),
-                            [... navSec.children].indexOf(e.target))
+                    if(e.target.getAttribute('href') !== null){
+                        e.preventDefault()
+                        if(e.target.getAttribute('href') === location.hash) return
+                        toNextSection(secChilds.findIndex(el => el.id === location.hash.slice(1)),
+                            navChilds.indexOf(e.target))
+                    }
                 })
             }
-        }
-
+            if(location.hash.length === 0) location.hash = secChilds[0].id
+        })
     </script>
 </body>
 </html>
