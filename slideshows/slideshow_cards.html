@@ -7,15 +7,15 @@
     <title>Slideshow</title>
 
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
         :root{
             font-family: Arial, Helvetica, sans-serif;
             --n-elem-slide: 5;
             --time-elem-slide: 4s;
+        }
+        :root *, :root *::before, :root *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
         }
         /* Estilos de SlideShow */
         .slideshow{
