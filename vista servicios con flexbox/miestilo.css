@@ -1,4 +1,10 @@
- body{
+:root *, :root *::before, :root *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
     background: #f8f6f6;
     font-family: 'Open Sans', sans-serif;
     padding: 0;
