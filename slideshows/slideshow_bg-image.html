@@ -7,14 +7,14 @@
     <title>Slideshow</title>
 
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
         :root{
             --n-elem-slide: 5;
             --time-elem-slide: 4s;
+        }
+        :root *, :root *::before, :root *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
         }
         .slideshow{
             width: 98vw;
