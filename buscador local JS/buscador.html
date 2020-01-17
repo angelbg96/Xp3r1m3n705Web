@@ -285,6 +285,7 @@
         inputSearch.parentElement.addEventListener('submit', e => e.preventDefault())
         inputSearch.addEventListener('keydown', e => {
             if(e.keyCode == 27) closeDialogSearch() // Tecla Esc
+            else if(e.key === ' ' && inputSearch.value.slice(-1) === ' ') e.preventDefault()
             else if(/[^À-ÿ\w\s]/.test(e.key)) e.preventDefault() // \w equivale a A-z0-9
             console.log(`${e.keyCode}: ${e.key}`)
         })
