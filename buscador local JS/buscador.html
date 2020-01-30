@@ -211,6 +211,9 @@
             boxResults = dialogSearch.querySelector('.box-results'),
             styleSheetIS = [... document.styleSheets[0].cssRules].find(el => el.selectorText === '.dialog-search__input').style
         
+        if(!(btnOpenSearch && dialogSearch && inputSearch && boxResults && styleSheetIS ))
+            throw "Elementos faltantes en el DOM"
+        
         let searchKeys, searchKeysPre, arrayRegistries, arrayResults, regExpTest
 
         fetch('catalogo-secciones.json')
@@ -247,6 +250,7 @@
             toggleDialogShow()
         },
         performSearch = () => {
+            if(!arrayRegistries.length) return
             regExpTest = new RegExp(`^(?=.*${searchKeys.join(')(?=.*')}).*$`,"g")
             console.log(`buscar resultados para: ${searchKeys.toString()}`)
             arrayResults = arrayRegistries.filter(el => regExpTest.test(el.keys))
@@ -275,6 +279,13 @@
                                         : tempEmptyResults
             boxResults.classList.add('box-results--notEmpty')
             inputSearch.classList.add('DS__input--borderB')
+        },
+        inputValueChange =  () => {
+            searchKeysPre = inputSearch.value.trim().split(' ')
+            searchKeys = [... new Set(searchKeysPre.filter(word => word.length > 2))]
+            if (searchKeys.length){
+                if(searchKeysPre.slice(-1)[0] === searchKeys.slice(-1)[0]) performSearch()
+            } else resetElementsSearch()
         }
 
         btnOpenSearch.addEventListener('click', openDialogSearch)
@@ -289,13 +300,7 @@
             else if(/[^À-ÿ\w\s]/.test(e.key)) e.preventDefault() // \w equivale a A-z0-9
             console.log(`${e.keyCode}: ${e.key}`)
         })
-        inputSearch.addEventListener('input', () => {
-            searchKeysPre = inputSearch.value.trim().split(' ')
-            searchKeys = [... new Set(searchKeysPre.filter(word => word.length > 2))]
-            if (searchKeys.length){
-                if(searchKeysPre.slice(-1)[0] === searchKeys.slice(-1)[0]) performSearch()
-            } else resetElementsSearch()
-        })
+        inputSearch.addEventListener('input', inputValueChange)
     </script>
 </body>
 </html>
