@@ -251,7 +251,7 @@
         },
         performSearch = () => {
             if(!arrayRegistries.length) return
-            regExpTest = new RegExp(`^(?=.*${searchKeys.join(')(?=.*')}).*$`,"g")
+            regExpTest = new RegExp(`^(?=.*${searchKeys.join(')(?=.*')}).*$`,"gi")
             console.log(`buscar resultados para: ${searchKeys.toString()}`)
             arrayResults = arrayRegistries.filter(el => regExpTest.test(el.keys))
                 // forma con match y con patron AND en RegEx
