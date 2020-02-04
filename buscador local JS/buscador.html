@@ -214,7 +214,7 @@
         if(!(btnOpenSearch && dialogSearch && inputSearch && boxResults && styleSheetIS ))
             throw "Elementos faltantes en el DOM"
         
-        let searchKeys, searchKeysPre, arrayRegistries, arrayResults, regExpTest
+        let searchKeys, searchKeysPre, arrayRegistries, arrayResults, regExpTest, valueDebug
 
         fetch('catalogo-secciones.json')
         .then( data => data.json() )
@@ -288,7 +288,10 @@
                     return
                 } else if(/[^à-ÿa-z\d\s]/gi.test(inputSearch.value)){
                     // RegEx equivalente /[^À-ÿ\w\s]/  |  el \w equivale a A-z0-9_
-                    inputSearch.value = inputSearch.value.match(/[à-ÿa-z\d\s]/gi).join('')
+                    valueDebug = inputSearch.value.match(/[à-ÿa-z\d\s]/gi)
+                    inputSearch.value = valueDebug
+                                        ? valueDebug.join('')
+                                        : ""
                     return
                 }
             }
