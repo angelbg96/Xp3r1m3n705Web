@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba JS</title>
+    <style>
+        body *{
+            box-sizing: border-box;
+        }
+        body {
+            width: 90vw;
+            margin: 0 auto;
+            padding: 3em 0em;
+        }
+        p {
+            padding: 1em 2em;
+            background-color: cyan;
+        }
+        #recupera {
+            border: 1px dotted currentColor;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="recupera">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium, libero.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut optio dolores, esse dolor atque cupiditate.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        Hola Me llamó mi madre &cuote;
+    </div>
+
+    <script>
+        var contenedor = document.getElementById("recupera");
+        var nodosItems = contenedor.childNodes;
+        var i = -1;
+        var isFound = false;
+        var textoArr = [];
+
+        setTimeout(function() {
+            for (i = -1; i < nodosItems .length; ++i) {
+            if(nodosItems[i+1].nodeType === 3){
+                console.log("indice en " + (i+1));
+                if(/[a-z]/gi.test(nodosItems[i+1].textContent)){
+                    isFound = true;
+                    textoArr.push("<p>Por fin soy un parrafo</p>")
+                    nodosItems[++i].textContent = textoArr[0];
+                    console.time("Mutacion");
+                    // o bien
+                    // var nuevoEl = document.createElement("tagName")
+                    // nuevoEl.textContent = "texto a colocar"
+                    break;
+                }
+            }
+        }
+        }, 4000);
+
+
+        const observer = new MutationObserver(function(mutationList) { 
+            console.log(mutationList[0])
+            // mutationList[indice].addedNodes.length se verifica el listado de nodos añadidos
+            // mutationList[indice].removedNodes.length se verifica el listado de nodos eliminados
+            // mutationList[indice].type se verifica el tipo de mutación que ocurrió
+            if(mutationList[0].type === "characterData" && isFound) {
+                isFound = false;
+                nodosItems[i].textContent = "";
+                if (i === 0){
+                    contenedor.innerHTML = textoArr[0] + contenedor.innerHTML;
+                }
+                else if (i === nodosItems.length-1){
+                    contenedor.innerHTML += textoArr[0];
+                }
+                console.timeEnd("Mutacion");
+            }
+        });
+        const observerOptions = { 
+            attributes: false,              // Observa mutaciones en atributos ej. class, src, href, etc ...
+            childList: true,                // Observa mutaciones cuando se agregan o eliminan elementos del DOM
+            subtree: true,                  // Hijos del elemento padre han mutado
+            characterData: true,            // Cambios en el contenido de un elemento (texto)
+            attributeOldValue: false,       // Recupera el valor antes de la mutación
+            characterDataOldValue: false    // Recupera el texto antes de haber sido mutado
+        };
+        observer.observe(contenedor, observerOptions);
+        
+        // contenedor.addEventListener("DOMSubtreeModified", function(e){
+        //     console.log(e)
+        //     if(isFound === true){
+        //         isFound = false;
+        //         nodosItems[i].textContent = ""
+        //         if (i === 0){
+        //             contenedor.innerHTML = textoArr[0] + contenedor.innerHTML;
+        //         }
+        //         else if (i === nodosItems.length-1){
+        //             contenedor.innerHTML += textoArr[0];
+        //         }
+                
+        //     }
+        // })
+    </script>
+</body>
+</html>
