@@ -1,0 +1,22 @@
+:root *, :root *::before, :root *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bar-color: red;
+    --width: 0;
+}
+
+body::before{
+    content: '';
+    display: block;
+    height: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bar-color);
+    /* Progreso */
+    width: calc(var(--width) * 1vw);
+}

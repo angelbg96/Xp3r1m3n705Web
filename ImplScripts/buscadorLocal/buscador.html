@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Buscador</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        :root *, :root *::before, :root *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        .main{
+            padding: 50px 10%;
+        }
+        .main h1{
+            font-size: 1.5em;
+            margin-bottom: 1em;
+        }
+        .main p{
+            margin-bottom: 1em;
+        }
+        .main button{
+            color: white;
+            font-size: 1em;
+            padding: 0.2em;
+            background-color: #d93955;
+            border: none;
+            cursor: pointer;
+        }        
+        .DS--open{
+            height: 100vh;
+            overflow-y: hidden;
+        }
+        .dialog-search {
+            font-size: 1em;
+            padding: 3.8em 8% 1.8em;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background-color: rgba(250, 250, 250, 0.8);
+            visibility: hidden;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+            animation-direction: normal;
+        }
+        .dialog-search--show{
+            animation-name: dialog-search__animation-open;
+        }
+        .dialog-search--hidden {
+            animation-name: dialog-search__animation-close;
+        }
+        .search-container {
+            /* padding:0 0.4em; */
+            border: 2px solid #d93955;
+            border-radius: 30px;
+            background-color: #f9f9f9; /* Background Body */
+            overflow: hidden;
+        }
+        .dialog-search__input {
+            font-size: 1em;
+            padding: 0.5em 1em;
+            border-style: none;
+            background-color: transparent;
+            width: 100%;
+            visibility: inherit;
+        }
+        .DS__input--borderB {
+            border-bottom: 2px solid #d93955; /*color red*/
+        }
+        .box-results {
+            list-style: none;
+            height: auto;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .box-results--notEmpty {
+            margin-bottom: 10px;
+        }
+        .result-item {
+            padding: 0.6em 1em;
+            border-bottom: 1px solid #d93955; /*color red*/
+        }
+        .link-result {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item:hover {
+            background-color: #eee; 
+            transition: background-color 0.1s ease;
+        }
+
+        @keyframes dialog-search__animation-open {
+            from {
+                visibility: hidden;
+                opacity: 0;
+                clip-path: inset(50%);
+            }
+            5% {
+                visibility: visible;
+                clip-path: inset(50%);
+            }
+            to {
+                visibility: visible;
+                opacity: 1;
+                clip-path: inset(0);
+            }
+        }
+        @keyframes dialog-search__animation-close {
+            from {
+                visibility: visible;
+                opacity: 1;
+                clip-path: inset(0);
+            }
+            95% {
+                visibility: visible;
+                opacity: 0;
+                clip-path: inset(50%);
+            }
+            to {
+                visibility: hidden;
+                opacity: 0;
+                clip-path: inset(50%);
+            }
+        }
+
+        @media(min-width: 415px){
+            body {
+                font-size: 15px;
+            }
+            .dialog-search {
+                padding-left: 12%;
+                padding-right: 12%;
+            }
+        }
+        @media(min-width: 769px){
+            body {
+                font-size: 16px;
+            }
+        }
+        @media(min-width: 1024px){
+            body {
+                font-size: 17px;
+            }
+            .dialog-search {
+                padding-left: 15%;
+                padding-right: 15%;
+            }
+        }
+        @media(min-width: 1200px){
+            body {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main">
+        <h1>Lorem ipsum dolor sit amet</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur inventore expedita laborum ipsa mollitia velit, assumenda nostrum quaerat, saepe nobis quas ducimus cumque illum voluptas sint quidem facilis laboriosam sed?</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis molestias fugit non, saepe dolor itaque atque a aliquid sunt odio sint qui, in laboriosam minima necessitatibus laborum? Repellendus, corporis sunt.</p>
+        <p>Beatae, ipsum, ratione quas odio placeat pariatur in perspiciatis iure quibusdam ab aliquid officia quos. Et unde neque illo minima reiciendis rerum, aut quibusdam nobis, enim, perspiciatis ut cumque sed?</p>
+        <p>Error nulla ullam voluptatem quisquam quas hic, fuga dicta dolores obcaecati consequuntur autem deleniti suscipit doloremque, dolorum aperiam alias. Vero nobis molestias quidem maxime accusamus, quasi quisquam vitae dolorem ipsum!</p>
+        <p>Perspiciatis, similique nesciunt! Sit dicta cupiditate eius impedit in inventore blanditiis doloremque sapiente, obcaecati, itaque exercitationem maiores magni nisi harum consectetur ad iusto quasi sint soluta iste aut velit! Numquam.</p>
+        <p>Tenetur ullam, quisquam ad blanditiis soluta modi odio autem sint deleniti adipisci dolor est exercitationem harum expedita dignissimos tempore, pariatur dolorum nemo eligendi dolore. Consequuntur omnis consectetur minus? Laboriosam, dolor.</p>
+        <button type="button" id="btn-search">busca!</button>
+    </main>
+    <section class="dialog-search">
+        <div class="search-container">
+            <form action="">
+                <input class="dialog-search__input" type="text" id="input-search" placeholder="Buscar">
+            </form>
+            <ul class="box-results">
+                <li class="result-item">
+                    <a class="link-result" href="#"> Lorem ipsum dolor sit, amet consectetur adipisicing</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <script>
+
+        let bufferResults = document.createDocumentFragment()
+        const templateResults = 
+            `<li class="result-item">
+                <a class="link-result" href="#">Lorem ipsum dolor sit, amet consectetur adipisicing</a>
+            </li>`,
+            tempEmptyResults = `<li class="result-item">Sin coincidencias</li>`
+
+        const btnOpenSearch = document.getElementById('btn-search'),
+            dialogSearch = document.querySelector('.dialog-search'),
+            inputSearch = document.getElementById('input-search'),
+            boxResults = dialogSearch.querySelector('.box-results'),
+            styleSheetIS = [... document.styleSheets[0].cssRules].find(el => el.selectorText === '.dialog-search__input').style
+        
+        if(!(btnOpenSearch && dialogSearch && inputSearch && boxResults && styleSheetIS ))
+            throw "Elementos faltantes en el DOM"
+        
+        let searchKeys, searchKeysPre, arrayRegistries, arrayResults, regExpTest, valueDebug
+
+        fetch('catalogo-secciones.json')
+        .then( data => data.json() )
+        .then(data => {
+            arrayRegistries = data
+            console.log(arrayRegistries)
+        })
+        .catch(e => {
+            console.warn('Ocurrió un error')
+            console.log(e)
+        })
+
+        const toggleDialogShow = () => {
+            document.body.classList.toggle('DS--open')
+            dialogSearch.classList.toggle('dialog-search--show')
+        },
+        resetElementsSearch = () => {
+            boxResults.innerHTML = ''
+            boxResults.classList.remove('box-results--notEmpty')
+            inputSearch.classList.remove('DS__input--borderB')
+        },
+        openDialogSearch = () => {
+            styleSheetIS.setProperty('visibility', 'visible')
+            inputSearch.value = ''
+            dialogSearch.classList.remove('dialog-search--hidden')
+            resetElementsSearch()
+            toggleDialogShow()
+            inputSearch.focus()
+        },
+        closeDialogSearch = () => {
+            styleSheetIS.setProperty('visibility', 'inherit')
+            dialogSearch.classList.add('dialog-search--hidden')
+            toggleDialogShow()
+        },
+        performSearch = () => {
+            if(!arrayRegistries.length) return
+            regExpTest = new RegExp(`^(?=.*${searchKeys.join(')(?=.*')}).*$`,"gi")
+            console.log(`buscar resultados para: ${searchKeys.toString()}`)
+            arrayResults = arrayRegistries.filter(el => regExpTest.test(el.keys))
+                // forma con match y con patron AND en RegEx
+                // return el.keys.match(regExpTest) ? true : false
+                // forma con match y sin patron AND en RegEx
+                // if(arrayMatch) return true
+                //     // return arrayMatch.length >= searchKeys.length ? true : false
+                // else return false
+            
+            console.log(arrayResults)
+            putResultsDOM()
+           
+        },
+        putResultsDOM = () => {
+             // instrucciones si peticion sale exitosa
+             bufferResults.innerHTML = ''
+            for (const registryFound of arrayResults) {
+                bufferResults.innerHTML += 
+                `<li class="result-item">
+                    <a class="link-result" href="${registryFound.href}">${registryFound.titulo}</a>
+                </li>`
+            }
+            boxResults.innerHTML = bufferResults.innerHTML.length
+                                        ? bufferResults.innerHTML
+                                        : tempEmptyResults
+            boxResults.classList.add('box-results--notEmpty')
+            inputSearch.classList.add('DS__input--borderB')
+        },
+        inputValueChange =  () => {
+            if(!inputSearch.value.length) return
+            else if(e.inputType === "insertText"){
+                if(e.data === ' ' && inputSearch.value[inputSearch.value.length-2] === ' '){
+                    inputSearch.value = inputSearch.value.substring(0,inputSearch.value.length-1)
+                    return
+                } else if(/[^à-ÿa-z\d\s]/gi.test(inputSearch.value)){
+                    // RegEx equivalente /[^À-ÿ\w\s]/  |  el \w equivale a A-z0-9_
+                    valueDebug = inputSearch.value.match(/[à-ÿa-z\d\s]/gi)
+                    inputSearch.value = valueDebug
+                                        ? valueDebug.join('')
+                                        : ""
+                    return
+                }
+            }
+            searchKeysPre = inputSearch.value.trim().split(' ')
+            searchKeys = [... new Set(searchKeysPre.filter(word => word.length > 2))]
+            if (searchKeys.length){
+                if(searchKeysPre.slice(-1)[0] === searchKeys.slice(-1)[0]) performSearch()
+            } else resetElementsSearch()
+        }
+
+        btnOpenSearch.addEventListener('click', openDialogSearch)
+        dialogSearch.addEventListener('click', e => {
+            e.stopPropagation()
+            if(e.target === dialogSearch) closeDialogSearch()
+        })
+        inputSearch.parentElement.addEventListener('submit', e => e.preventDefault())
+        inputSearch.addEventListener('keydown', e => {
+            if(e.keyCode == 27) closeDialogSearch() // Tecla Esc
+            console.log(`${e.keyCode}: ${e.key}`)
+        })
+        inputSearch.addEventListener('input', inputValueChange)
+    </script>
+</body>
+</html>
