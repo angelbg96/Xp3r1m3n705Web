@@ -1,0 +1,47 @@
+:root *, :root *::before, :root *::after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+    font-size: 1.5em;
+}
+
+.menu{
+    list-style: none;
+    margin: 0;
+    display: flex;
+    background-color: #333;
+}
+.submenu{
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
+.menu-item{
+    position: relative;
+}
+.menu-item:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.menu-link{
+    text-decoration: none;
+    color: #ddd;
+    display: block;
+    padding: 0.5em 1em;
+}
+.menu-link-logo{
+    padding: 0.2em;
+}
+.menu-logo{
+    height: 40px;
+}
+.submenu .submenu{
+    left: 100%;
+    top: 0;
+}
+.menu-item:hover > .submenu{
+    display: block;
+}

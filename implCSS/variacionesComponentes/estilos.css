@@ -1,0 +1,30 @@
+:root{
+    --main-color: blue;
+    --font-size: 1em;
+}
+
+[class*=button]{
+    display: inline-block;
+    padding:  1em 2em;
+    text-decoration: none;
+    border: none;
+    margin: 1em;
+    color: #fff;
+    background-color: var(--main-color);
+    border-radius: .25rem;
+    font-size: var(--font-size);
+}
+
+.button--alert{
+    --main-color: red;
+}
+.button-cta{
+    --main-color: orange;
+}
+
+.button--small{
+    --font-size: 0.75em;
+}
+.button--big{
+    --font-size: 1.25em;
+}
