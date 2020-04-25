@@ -51,6 +51,9 @@
                     isFound = true;
                     textoArr.push("<p>Por fin soy un parrafo</p>")
                     nodosItems[++i].textContent = textoArr[0];
+                    if(CSS.supports("clip-path", "url(#elemSVG)")){
+                        console.log("Acepta clip-path!")
+                    }
                     console.time("Mutacion");
                     // o bien
                     // var nuevoEl = document.createElement("tagName")
