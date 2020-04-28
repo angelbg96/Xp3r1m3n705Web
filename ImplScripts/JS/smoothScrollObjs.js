@@ -74,10 +74,10 @@ const smoothScroll = {
     offsetY: 0,
     fxAnimation: animationEq.easeInOutCubic,
 
-    init: (duration, offsetY = 0, fxAnimation = '') => {
-        smoothScroll.duration = duration
-        smoothScroll.offsetY = offsetY
-        smoothScroll.fxAnimation = smoothScroll.getFxAnim(fxAnimation)
+    init: function(duration, offsetY = 0, fxAnimation = '') {
+        this.duration = duration
+        this.offsetY = offsetY
+        this.fxAnimation = this.getFxAnim(fxAnimation)
     },
     getFxAnim: fxName => {
         switch(fxName){
@@ -99,7 +99,7 @@ const smoothScroll = {
             case 'circ ease in/out': return animationEq.easeInOutCirc
         }
     },
-    scrollTo: target => {
+    scrollTo: function(target) {
         let startPosition = pageYOffset,
             startTime = null,
             targetElem = Object.getPrototypeOf(target) === HTMLElement.prototype
@@ -109,16 +109,16 @@ const smoothScroll = {
             console.warn('El elemento no se encuentra en el DOM')
             return
         }
-        smoothScroll.targetPosition = Math.round(targetElem.getBoundingClientRect().top)
-        smoothScroll.distance = smoothScroll.targetPosition - smoothScroll.offsetY
-        if(Math.abs(smoothScroll.distance) < 1 ) return
+        this.targetPosition = Math.round(targetElem.getBoundingClientRect().top)
+        this.distance = this.targetPosition - this.offsetY
+        if(Math.abs(this.distance) < 1 ) return
 
         const animation = currentTime => {
             if(startTime === null) startTime = currentTime
             let timeElapsed = currentTime - startTime,
-                run = smoothScroll.fxAnimation(timeElapsed,startPosition,smoothScroll.distance,smoothScroll.duration)
+                run = this.fxAnimation(timeElapsed,startPosition,this.distance,this.duration)
             scrollTo(0,run)
-            if(timeElapsed < smoothScroll.duration ) requestAnimationFrame(animation)
+            if(timeElapsed < this.duration ) requestAnimationFrame(animation)
         }
 
         requestAnimationFrame(animation)
