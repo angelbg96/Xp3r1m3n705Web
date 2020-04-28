@@ -7,9 +7,11 @@ let duration = 1000,
     startTime
 
 const smoothScroll = (target) => {
-    targetElem = typeof target === "string"
-                ? document.querySelector(target)
-                : target
+    targetElem = target instanceof HTMLElement
+                // typeof target === "string"
+                // Object.getPrototypeOf(target) === HTMLElement.prototype
+            ? target
+            : document.querySelector(target)
     if(targetElem === undefined || targetElem === null){
         console.warn('El elemento no se encuentra en el DOM')
         return

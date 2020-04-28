@@ -102,7 +102,8 @@ const smoothScroll = {
     scrollTo: function(target) {
         let startPosition = pageYOffset,
             startTime = null,
-            targetElem = Object.getPrototypeOf(target) === HTMLElement.prototype
+            targetElem = target instanceof HTMLElement
+                        // Object.getPrototypeOf(target) === HTMLElement.prototype
                     ? target
                     : document.querySelector(target)
         if(targetElem === undefined || targetElem === null){
