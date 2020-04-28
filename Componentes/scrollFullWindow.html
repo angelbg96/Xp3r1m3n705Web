@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scrolls!</title>
+    <style>
+        :root *, :root *::before, :root *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 20px;
+            /* padding-top: calc(2*4px + 0.8em + 2*4px); */
+            overflow: hidden;
+            background-color: whitesmoke;
+        }
+        main{
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            z-index: 1;
+        }
+        .navbar{
+            background-color: blanchedalmond;
+            font-size: 0.8em;
+            padding: 4px 16px;
+            display: flex;
+            justify-content: space-around;
+            transform: translate3d(0,-80%,0);
+            transition:  transform 0.5s ease-in-out;
+            border-bottom: 2px solid gainsboro;
+        }
+        .navbar a{
+            text-decoration: none;
+            color: cadetblue;
+            padding: 4px 8px;
+        }
+        .navbar::after{
+            content: '^';
+            color: gainsboro;
+            background-color: blanchedalmond;
+            border: 2px solid gainsboro;
+            border-radius: 50%;
+            padding: 3px 4px 0;
+            font-size: 1.2em;
+            position: absolute;
+            top: 101%;
+            left: calc(50% - 4px - 0.6em);
+            z-index: 90;
+            cursor: default;
+        }
+        .nav-container{
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .nav-container:hover .navbar{
+            transform: translate3d(0,0,0);
+        }
+        .sec{
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1em;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            opacity: 0;
+            overflow-y: auto;
+            transition: z-index 10ms linear,
+                        opacity 10ms linear;
+        }
+        .sec:nth-of-type(odd){
+            background-color: lightgreen;
+            color: black;
+        }
+        .sec:nth-of-type(even){
+            background-color:slategrey;
+            color: white;
+        }
+        .sec-content {
+            font-size: 7em;
+        }
+        .show-sec-top{
+            animation-name: fromTop;
+        }
+        .show-sec-bottom{
+            animation-name: fromBottom;
+        }
+        .show-sec-top, .show-sec-bottom{
+            animation-duration: 0.8s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        .sec:target{
+            opacity: 1;
+            z-index: 20;
+            transition: z-index 10ms linear,
+                        opacity 10ms linear;
+        }
+
+        @keyframes fromBottom {
+            from{
+                transform: translate3d(0,0,0);
+            }
+            0.5%{
+                transform: translate3d(0,100%,0);
+                z-index: 30;
+            }
+            10%{
+                opacity: 0;
+            }
+            85%{
+                opacity: 1;
+            }
+            to{
+                z-index: 30;
+                opacity: 1;
+                transform: translate3d(0,0,0);
+            }
+        }
+        @keyframes fromTop {
+            from{
+                transform: translate3d(0,0,0);
+            }
+            0.5%{
+                transform: translate3d(0,-100%,0);
+                z-index: 30;
+            }
+            10%{
+                opacity: 0;
+            }
+            85%{
+                opacity: 1;
+            }
+            to{
+                z-index: 30;
+                opacity: 1;
+                transform: translate3d(0,0,0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <nav id="nav-content" class="navbar">
+            <a href="#sec-1">link</a>
+            <a href="#sec-2">link</a>
+            <a href="#sec-3">link</a>
+            <a href="#sec-4">link</a>
+            <a href="#sec-5">link</a>
+        </nav>
+    </div>
+    <main id="scroll-container">
+        <section id="sec-1" class="sec">
+            <div class="sec-content">
+                1
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis facilis commodi in illum accusantium?</p>
+         </section>
+        <section id="sec-2" class="sec">
+            <div class="sec-content">
+                2
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis facilis commodi in illum accusantium?</p>
+        </section>
+        <section id="sec-3" class="sec">
+            <div class="sec-content">
+                3
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis facilis commodi in illum accusantium?</p>
+        </section>
+        <section id="sec-4" class="sec">
+            <div class="sec-content">
+                4
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis facilis commodi in illum accusantium?</p>
+        </section>
+        <section id="sec-5" class="sec">
+            <div class="sec-content">
+                5
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis facilis commodi in illum accusantium?</p>
+        </section>
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollSec = document.getElementById('scroll-container'),
+                navSec = document.getElementById('nav-content')
+            if(scrollSec === null || scrollSec === undefined)
+                throw 'El contenedor padre no existe en el DOM'
+            let wheelNow = 0,
+                secChilds = [... scrollSec.children],
+                scrollRun = false
+            const scrollCheck = (secView, scrollSill = 8) => {
+                if(Math.abs(wheelNow) < scrollSill) return
+                if(scrollRun === true){
+                    wheelNow = 0
+                    return
+                }
+                let toNext = secChilds.indexOf(secView)
+                toNext += wheelNow >= 0
+                            ? 1 // ver contenido inferior
+                            : -1 // ver contenido superior
+                wheelNow = 0
+                if(toNext < 0 || toNext > (scrollSec.childElementCount -1)) return
+                toNextSection(secChilds.indexOf(secView), toNext)
+                scrollRun = true
+            }
+            const toNextSection = (indexNow, toNext) => {
+                let classNext = toNext > indexNow
+                            ? 'show-sec-bottom' // ver contenido inferior
+                            : 'show-sec-top' // ver contenido superior
+                secChilds[toNext].classList.add(classNext)
+            }
+            scrollSec.addEventListener('wheel', e => {
+                wheelNow = parseFloat((wheelNow + e.deltaY).toFixed(3))
+                scrollCheck( secChilds.find(el => el.id === location.hash.slice(1)) )
+            })
+            scrollSec.addEventListener('animationend', e => {
+                location.hash = e.target.id
+                e.target.classList.remove([... e.target.classList].pop())
+                wheelNow = 0
+                scrollRun = false
+            })
+            scrollSec.addEventListener('touchstart', e => {
+                console.log(e)
+                wheelNow = Math.floor(e.touches[0].pageY)
+            })
+            scrollSec.addEventListener('touchend', e => {
+                console.log(e)
+                wheelNow -= Math.floor(e.changedTouches[0].pageY)
+                scrollCheck(secChilds.find(el => el.id === location.hash.slice(1)), 100)                
+            })
+            
+            if(navSec !== null || navSec !== undefined){
+                let navChilds = [... navSec.querySelectorAll('[href]')]
+                if(navChilds.length !== secChilds.length)
+                    throw 'cantidad de elemento en el contenedor no coincide con los enlaces en la barra de navegacion'
+                navSec.addEventListener('click', e => {
+                    e.stopPropagation()
+                    if(e.target.getAttribute('href') !== null){
+                        e.preventDefault()
+                        if(e.target.getAttribute('href') === location.hash) return
+                        toNextSection(secChilds.findIndex(el => el.id === location.hash.slice(1)),
+                            navChilds.indexOf(e.target))
+                    }
+                })
+            }
+            if(location.hash.length === 0) location.hash = secChilds[0].id
+        })
+    </script>
+</body>
+</html>
