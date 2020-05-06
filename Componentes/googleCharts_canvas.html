@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi primer ejemplo en Google Charts</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 2em;
+            width: 80vw;
+            margin: 0 auto;            
+        }
+        h1 {
+            text-align: center;
+        }
+        .skinAsBtn{
+            font-size: 14px;
+            text-decoration: none;
+            text-align: center;
+            color: black;
+            background-color: gainsboro;
+            padding: 0.6em 1em;
+            border: 1px solid gray;
+            border-radius: 5px;
+            display: block;
+            max-width: calc(1em * 10);
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        .chart-container{
+            height: 300px;
+            width: 400px;
+            margin: 0 auto;
+            margin-bottom: 2em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Consumiendo API Google Charts</h1>
+        <div id="graficoGoogleChart" class="chart-container"></div>
+        <canvas id="canvas" width="400" height="300" style="display: none;"></canvas>
+        <a class="skinAsBtn" href="#" download="grafica.png" id="btn-img" title="Descarga grafica">Descargame</a>
+    </main>
+    
+    <script>
+        const chartContainer = document.getElementById('graficoGoogleChart'),
+            btnDescarga = document.getElementById('btn-img');
+
+        function dibujarGrafico() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+              ['Mushrooms', 3],
+              ['Onions', 1],
+              ['Olives', 1],
+              ['Zucchini', 1],
+              ['Pepperoni', 2]
+            ]);
+
+            // Set chart options
+            var options = {
+              'title': 'How Much Pizza I Ate Last Night',
+              'width': 400,
+              'height': 300
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(chartContainer);
+            
+            google.visualization.events.addListener(chart, 'ready', function () {
+                btnDescarga.setAttribute("href", chart.getImageURI());
+                
+                // descargando imagen con otro navegador
+                if(navigator.msSaveBlob){
+                    const svgString = new XMLSerializer().serializeToString(chartContainer.querySelector('svg')),
+                        canvas = document.getElementById("canvas");
+                    var ctx = canvas.getContext("2d"),
+                        DOMURL = self.URL || self.webkitURL || self,
+                        svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"}),
+                        url = DOMURL.createObjectURL(svg);
+                        img = new Image(),
+
+                    btnDescarga.removeAttribute('href');
+                    btnDescarga.addEventListener('click', function(e){
+                        e.preventDefault();
+                        navigator.msSaveBlob(canvas.msToBlob(),"graficaMS.png");
+                    });
+                    img.addEventListener("load", function() {
+                        ctx.drawImage(img, 0, 0);
+                        // descarga alternativa de recurso
+                        var png = canvas.toDataURL("image/png");
+                        DOMURL.revokeObjectURL(png);
+                        // btnDescarga.setAttribute('href',png);
+                    });
+                    img.src = url;
+                }
+            });
+
+            chart.draw(data, options);
+        }
+        function dibujarGrafico2(){
+            // Tabla de datos: valores y etiquetas de la gráfica
+            var data = google.visualization.arrayToDataTable([
+            ['Texto', 'Valor numérico'],
+            ['Texto1', 20.21],
+            ['Texto2', 4.28],
+            ['Texto3', 17.26],
+            ['Texto4', 10.25]    
+            ]);
+            var options = {
+                title: 'Nuestro primer ejemplo con Google Charts'
+            }
+            // Dibujar el gráfico
+            new google.visualization.ColumnChart( 
+            //ColumnChart sería el tipo de gráfico a dibujar
+                document.getElementById('graficoGoogleChart')
+            ).draw(data, options);
+        }
+
+        // google.load("visualization", "1", {
+        //     packages: ["corechart", "treemap", "geochart", "calendar"]
+        //   });
+
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(dibujarGrafico);
+
+    </script> 
+</body>
+</html>
