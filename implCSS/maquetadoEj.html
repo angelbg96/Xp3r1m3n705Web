@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximun-scale=1, minimun-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Experimentando con diferentes esquemas o servicios en links, se le da más interactividad a web">
+    <link rel="icon" type="image/png" href="http://lorempixel.com/64/64/">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
-      :root *, :root *::before, :root *::after {
+      body, body *, body *::before, body *::after {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
@@ -20,7 +22,7 @@
       }
     </style>
 
-    <title> Pagina web larmi</title>
+    <title>Pagina con widgets | experimentando</title>
   </head>
   <body>
     <header style="font-size: 20px;">
@@ -42,7 +44,7 @@
                 <a class="nav-link dropdown-toggle" href="" id="subMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Servicios</a>
                 <div class="dropdown-menu" aria-labelledby="subMenu">
                   <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="mailto:angel96_28@hotmail.com?subject=Solicitar%20mayor%20información">Another action</a>
+                  <a class="dropdown-item" href="mailto:angel96_28@hotmail.com?subject=Solicitar%20mayor%20información" title="Mandar email">Another action</a>
                   <a class="dropdown-item" href="#">Something else here</a>
                 </div>
               </li>
@@ -50,10 +52,11 @@
                 <a class="nav-link" href="#">Beneficios</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="https://web.whatsapp.com/send?phone=5215521155668&text=Hola%20Quisiera%20mas%20informacion%20" target="_blank">Nosotros</a>
+                <a id="link-WA" class="nav-link" title="Manda whatsapp" target="_blank" rel="noopener noreferrer"
+                href="#">Nosotros</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="tel:5521155668"  onclick="return (navigator.userAgent.match(/Android | iPhone | movile /i)) != null">Contacto</a>
+                <a class="nav-link" href="tel:5521155668" title="Llama ya">Contacto</a>
               </li>
             </ul>
           </div>
@@ -62,8 +65,8 @@
       </nav>
     </header>
 
-    <div class="container">
-      <div class="row">
+    <main class="container">
+      <section class="row mb-4">
         <div class="col">
           <div class="jumbotron">
             <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
@@ -71,14 +74,36 @@
             <a href="">holiis</a>
           </div>
         </div>
-      </div>
+      </section>
+      <section class="row">
+        <div class="col">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d940.7878980991604!2d-99.17073882855198!3d19.40585506496275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff6af81bbc01%3A0x2730088404fa512b!2sCatfecito!5e0!3m2!1ses-419!2smx!4v1589925903803!5m2!1ses-419!2smx" 
+          width="100%" height="450" style="border-width: 0;" allowfullscreen="" aria-hidden="false" tabindex="0"
+          title="Catfecito &lt;3"></iframe>
+        </div>
+      </section>
 
-    </div>
+    </main>
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const link_WA = document.getElementById("link-WA")
+        let URL_API_WA = ".whatsapp.com/send?phone=5215521155668&text=Hola%20Quisiera%20mas%20informacion%20"
+
+        link_WA.setAttribute("href",
+        navigator.userAgent.match(/Android | iPhone | movile /i) != null
+          ? "https://api" + URL_API_WA
+          : "https://web" + URL_API_WA
+        )
+
+      })
+
+
+    </script>
   </body>
 </html>
