@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Slide de imagenes con tarjetas de información a partir de animaciones y JS">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slideshow</title>
+
+    <style>
+        :root{
+            font-family: Arial, Helvetica, sans-serif;
+            --width-slider: 100vw;
+            --transition-slider: 0.8s;
+            --keepItem-slider: 5s;
+        }
+        body, body *, body *::before, body *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: darkgrey;
+            font-size:20px;
+        }
+        /* Estilos de SlideShow */
+        .slideshow{
+            width: 100%;
+            margin: 0 auto;
+            cursor: default;
+            position: relative;
+            z-index: 10;
+        }
+        /* Estilos del carrusel de imagenes */
+        .container-items{
+            list-style: none;
+            width: 100%;
+            height: calc(var(--width-slider) * 9 / 24);
+            overflow: hidden;
+            position: relative;
+            z-index: 20;
+        }
+        .slide-item, .item-img{
+            width: 100%;
+            height: 100%;
+        }
+        /* Indicadores */
+        .container-indicators{
+            padding: 0.8em;
+            width: 100%;
+            position: absolute;
+            z-index: 20;
+            bottom: 0;
+        }
+        .indicators-list{
+            list-style: none;
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+        }
+        .indicator-item{
+            padding: 0.5em;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: background-color 0.8s ease-in;
+        }
+        .indicator-active{
+            background-color: #01aef0;
+        }
+        /* Estilos para las tarjetas */
+        .container-titles, .container-arts{
+            color: white;
+            position: absolute;
+            left: 2%;
+        }
+        .container-arts, .titles-list{
+            overflow: hidden;
+            z-index: 20;
+        }
+        .titles-list{
+            list-style: none;
+            background-color: #01aef0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        .container-titles{
+            font-size: 1.11em;
+            width: 40%;
+            height: calc((1.11em + 0.6em)*2); /* cambiar cantidad de px si cambia el px en .slide-title */
+            z-index: 20;
+            bottom: 200px;
+        }
+        .slide-title{
+            padding: 0.6em 1em;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .container-arts{
+            font-size: 0.9em;
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 50%;
+            height: calc(4*1em + 2*1em);    /* Calculado para 3 renglones más un renglón de padding superior e inferior */
+            bottom: 70px;
+        }
+        .slide-art{
+            width: 100%;
+            height: 100%;
+            padding: 1em 1.2em;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+         
+        /* Estilos para todos los elementos del carrusel */
+        .slide-item, .slide-title, .slide-art{
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: z-index 10ms linear,
+                        opacity var(--transition-slider) linear;
+        }
+        /* clases que generan las transiciones en slider */
+        .show-slide-prev{
+            animation-name: fromLeft;
+        }
+        .show-slide-next{
+            animation-name: fromRight;
+        }
+        .show-slide-prev, .show-slide-next{
+            animation-duration: var(--transition-slider);
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        .slide-active{
+            z-index: 30;
+            opacity: 1;
+            transition: z-index 10ms linear,
+                        opacity 10ms linear;
+            animation-name: keepShow;
+            animation-duration: var(--keepItem-slider);
+            animation-fill-mode: forwards;
+        }
+        @keyframes fromRight {
+            from{
+                transform: translate3d(0,0,0);
+            }
+            0.5%{
+                transform: translate3d(100%,0,0);
+                z-index: 30;
+            }
+            10%{
+                opacity: 0;
+            }
+            85%{
+                opacity: 1;
+            }
+            to{
+                z-index: 30;
+                opacity: 1;
+                transform: translate3d(0,0,0);
+            }
+        }
+        @keyframes fromLeft {
+            from{
+                transform: translate3d(0,0,0);
+            }
+            0.5%{
+                transform: translate3d(-100%,0,0);
+                z-index: 30;
+            }
+            10%{
+                opacity: 0;
+            }
+            85%{
+                opacity: 1;
+            }
+            to{
+                z-index: 30;
+                opacity: 1;
+                transform: translate3d(0,0,0);
+            }
+        }
+        @keyframes keepShow {
+            from {
+                z-index: 30;
+                opacity: 1;
+            }
+            to {
+                z-index: 30;
+                opacity: 1;
+            }
+        }
+        /* Selectores con mayor especificidad */
+        .slide-title h2{
+            font-size: 1em;
+        }
+        /* Elementos con pseudoclases */
+        .container-titles::after{
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            z-index: 20;
+            border-right: 3em solid transparent;
+            border-bottom: calc((1.11em + 0.6em)*2 + 0.03em) solid #01aef0;
+        }
+         /* Responsive Web Design */
+         @media(max-width:1200px){
+            .container-titles{
+                width: 32%;
+            }
+            .slide-title{
+                padding: 0.6em 0.8em;
+            }
+        }
+        @media(max-width:1024px){
+            .container-titles{
+                font-size: 0.87em;
+                width: 34%;
+            }
+            .container-arts{
+                font-size: 0.9em;
+            }
+        }
+        @media (max-width:768px){
+            .container-items{
+                height: calc(var(--width-slider) * 9 / 18);
+            }
+            .container-titles{
+                width: 38%;
+                bottom: 160px;
+            }
+            .container-arts{
+                font-size: 0.75em;
+                width: 55%;
+            }
+        }
+        @media (max-width:574px){
+            .container-titles{
+                font-size: 0.76em;
+                width: 45%;
+            }
+            .indicators-list{
+                width: 40%;
+            }
+            .container-arts{
+                font-size: 0.75em;
+                width: 70%;
+            }
+        }
+         @media (max-width:414px){
+            .container-items{
+                height: calc(var(--width-slider) * 9 / 14);
+            }
+            .indicators-list{
+                width: 55%;
+            }
+            .container-titles{
+                font-size: 0.76em;
+                width: 60%;
+                bottom: 140px;
+            }
+            .container-arts{
+                font-size: 0.7em;
+                width: 85%;
+            }
+         }
+    </style>
+</head>
+<body>
+    <div class="slideshow">
+        <ul class="container-items">
+            <li class="slide-item slide-active"><img class="item-img" src="01.jpg" alt=""></li>
+            <li class="slide-item"><img class="item-img" src="02.jpg" alt=""></li>
+            <li class="slide-item"><img class="item-img" src="03.jpg" alt=""></li>
+            <li class="slide-item"><img class="item-img" src="04.jpg" alt=""></li>
+        </ul>
+        <div class="container-titles">
+            <ul class="titles-list">
+                <li class="slide-title slide-active">
+                    <h2>Título de categoría 1</h2>
+                </li>
+                <li class="slide-title">
+                    <h2>Título de categoría 2</h2>
+                </li>
+            </ul>
+        </div>
+        <div class="container-arts">
+            <article class="slide-art slide-active">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <p>
+                    Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum.
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    Aliquam quo et mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum.
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ducimus recusandae porro obcaecati blanditiis dolorum.
+                </p>
+            </article>
+            <article class="slide-art">
+                <p>
+                    2. Lorem ipsum ducimus recusandae porro obcaecati amet  elit. 
+                    Culpa non, dolor sit  consectetur adipisicing blanditiis dolorum.
+                </p>
+            </article>
+        </div>
+        <div class="container-indicators">
+           <ol class="indicators-list">
+              <li class="indicator-item indicator-active"></li>
+              <li class="indicator-item"></li>
+              <li class="indicator-item"></li>
+              <li class="indicator-item"></li>
+           </ol>
+        </div>
+    </div>
+
+    <div style="margin-top: 200px; padding:2em;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum suscipit earum id impedit a quaerat qui, molestiae maxime temporibus voluptatibus accusantium quidem officiis, necessitatibus alias, tempore perspiciatis eveniet laudantium! Rem sapiente porro eius, sequi exercitationem nam, nihil aut, optio modi quasi corporis itaque error magnam minus mollitia iure nemo ut ipsam blanditiis nobis aperiam! Quod soluta deserunt nihil expedita assumenda ducimus maiores quaerat, est asperiores, sint aliquam quibusdam voluptate quidem nesciunt consequatur eum, porro optio vitae. Illo eligendi soluta odit deserunt laudantium libero ea cum voluptas explicabo nam ratione doloremque alias aspernatur, ullam cupiditate itaque quae fuga repellat, modi hic eos aliquam. Aut sint dolorem provident temporibus dolor optio ipsum adipisci delectus, pariatur eveniet earum tempora eos cupiditate sequi sunt sed deleniti. Laudantium assumenda aut impedit vitae, necessitatibus sint illo reprehenderit soluta commodi blanditiis sunt ullam magni quam eaque voluptas reiciendis ex ad hic amet! Laudantium unde molestias rem ullam, tempore maiores ipsa perferendis nam necessitatibus commodi voluptate delectus, modi voluptatibus quod. Impedit doloribus nam, repellendus veritatis fuga voluptatibus maxime itaque voluptates. Repudiandae fugit fugiat deleniti odit blanditiis error debitis cumque magni facere accusamus similique architecto, aut earum numquam nisi temporibus magnam, officiis adipisci corrupti! Saepe, voluptatibus. Iste labore magni illum eveniet accusamus suscipit voluptatem fugit itaque excepturi aperiam dicta, error fugiat atque at quasi porro vero voluptas dolor qui similique obcaecati impedit natus, pariatur necessitatibus? Placeat inventore laborum vero qui tempora voluptatem tenetur laudantium deleniti eligendi saepe nam labore, omnis expedita culpa ipsum quia veritatis iste fugiat? Dolorem minus qui beatae, modi perspiciatis suscipit voluptates velit a, recusandae asperiores numquam ad itaque necessitatibus commodi quos nemo sapiente nihil, aliquam sit accusantium! Consequuntur blanditiis repudiandae, quibusdam quod expedita alias incidunt error mollitia neque sint facere eius consectetur ab tempora exercitationem repellendus ut. Praesentium sapiente inventore nemo, animi voluptate impedit reprehenderit?</div>
+    
+    <script>
+        // let count = 0,
+        //     n = 0,
+        //     timeInterval = 5000,
+        //     elemenTitle = document.querySelector('.titles-list'),
+        //     itemsBG = [... document.querySelectorAll('.slide-item')],
+        //     itemsTitle = [... document.querySelectorAll('.slide-title')],
+        //     itemsArt = [... document.querySelectorAll('.slide-art')],
+        //     itemsInd = [... document.querySelectorAll('.indicator-item')]
+        // if(itemsBG && itemsTitle && itemsArt && elemenTitle && itemsInd){
+        //     n = itemsBG.length
+
+        //     elemenTitle.addEventListener('transitionend',e => {
+        //         console.log(e.target)
+        //         if(count == 0 || count == 3)
+        //             e.target.classList.remove('slide-prev')
+        //     })
+
+        //     setInterval(()=>{
+        //         if(count == 0){
+        //             itemsBG[n-1].classList.remove('slide-prev')
+        //             itemsArt[n-1].classList.remove('slide-prev')
+        //         }
+        //         else{
+        //             itemsBG[count-1].classList.remove('slide-prev')
+        //             itemsArt[count-1].classList.remove('slide-prev')
+        //         }
+        //         itemsBG[count].classList.add('slide-prev')
+        //         itemsBG[count].classList.remove('slide-active')
+        //         itemsArt[count].classList.add('slide-prev')
+        //         itemsArt[count].classList.remove('slide-active')
+        //         itemsInd[count].classList.remove('indicator-active')
+        //         if(count == n - 1){
+        //             count = -1
+        //             itemsTitle[0].classList.add('slide-active')
+        //             itemsTitle[1].classList.remove('slide-active')
+        //             itemsTitle[1].classList.add('slide-prev')
+        //         }
+        //         /* Para el cambio en  los titulos */
+        //         else if(count == 2){
+        //             itemsTitle[0].classList.add('slide-prev')
+        //             itemsTitle[0].classList.remove('slide-active')
+        //             itemsTitle[1].classList.add('slide-active')
+        //         }
+        //         itemsBG[++count].classList.add('slide-active')
+        //         itemsArt[count].classList.add('slide-active')
+        //         itemsInd[count].classList.add('indicator-active')
+        //     },timeInterval)
+        // }
+    </script>
+</body>
+</html>
