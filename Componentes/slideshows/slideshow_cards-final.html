@@ -383,21 +383,22 @@
                 if(indexNow+1 < totalItems)
                     indexNow++
                 else indexNow = 0
-
+                classToAdd = "show-slide-next"
+                
                 if(indexNow === 0){
                     itemsTitle[1].classList.remove("slide-active")
-                    itemsTitle[0].classList.add("show-slide-next")
+                    itemsTitle[0].classList.add(classToAdd)
                 } else if(indexNow === 3){
                     itemsTitle[0].classList.remove("slide-active")
-                    itemsTitle[1].classList.add("show-slide-next")
+                    itemsTitle[1].classList.add(classToAdd)
                 }
                 itemsInd[indexLast].classList.remove("indicator-active")
                 itemsInd[indexNow].classList.add("indicator-active")
                 itemsArt[indexLast].classList.remove("slide-active")
-                itemsArt[indexNow].classList.add("show-slide-next")
+                itemsArt[indexNow].classList.add(classToAdd)
 
                 e.target.classList.remove("slide-active")
-                itemsBG[indexNow].classList.add("show-slide-next")
+                itemsBG[indexNow].classList.add(classToAdd)
             } else {
                 classToRemove = [... e.target.classList].pop()
 
