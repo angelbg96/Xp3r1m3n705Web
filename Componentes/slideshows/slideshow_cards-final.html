@@ -61,10 +61,13 @@
             margin: 0 auto;
         }
         .indicator-item{
-            padding: 0.5em;
+            width: 1em;
+            height: 1em;
             border: 1px solid transparent;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            cursor: pointer;
             transition: background-color 0.8s ease-in;
         }
         .indicator-active{
@@ -220,6 +223,9 @@
         }
          /* Responsive Web Design */
          @media(max-width:1200px){
+            body {
+                font-size: 19px;
+            }
             .container-titles{
                 width: 32%;
             }
@@ -228,6 +234,9 @@
             }
         }
         @media(max-width:1024px){
+            body {
+                font-size: 18px;
+            }
             .container-titles{
                 font-size: 0.87em;
                 width: 34%;
@@ -237,6 +246,9 @@
             }
         }
         @media (max-width:768px){
+            body {
+                font-size: 17px;
+            }
             .container-items{
                 height: calc(var(--width-slider) * 9 / 18);
             }
@@ -250,6 +262,9 @@
             }
         }
         @media (max-width:574px){
+            body {
+                font-size: 16px;
+            }
             .container-titles{
                 font-size: 0.76em;
                 width: 45%;
@@ -263,6 +278,9 @@
             }
         }
          @media (max-width:414px){
+            body {
+                font-size: 15px;
+            }
             .container-items{
                 height: calc(var(--width-slider) * 9 / 14);
             }
@@ -329,10 +347,10 @@
         </div>
         <div class="container-indicators">
            <ol class="indicators-list">
-              <li class="indicator-item indicator-active"></li>
-              <li class="indicator-item"></li>
-              <li class="indicator-item"></li>
-              <li class="indicator-item"></li>
+              <li class="indicator-item indicator-active" title="Ir a tarjeta 1"></li>
+              <li class="indicator-item" title="Ir a tarjeta 2"></li>
+              <li class="indicator-item" title="Ir a tarjeta 3"></li>
+              <li class="indicator-item" title="Ir a tarjeta 4"></li>
            </ol>
         </div>
     </div>
@@ -354,10 +372,13 @@
         
         const totalItems = itemsBG.length
         let classToRemove = "",
+            classToAdd = "",
+            isRunAnimation = false,
             indexNow = 0,
             indexLast = totalItems - 1
         const animationHandler = e => {
             if(e.target.classList.value.indexOf("slide-active") > 0){
+                isRunAnimation = true
                 indexLast = indexNow
                 if(indexNow+1 < totalItems)
                     indexNow++
@@ -391,11 +412,41 @@
                 itemsArt[indexNow].classList.add("slide-active")
                 e.target.classList.remove(classToRemove)
                 e.target.classList.add("slide-active")
+
+                isRunAnimation = false
             }
 
+        },
+        changeSlide = indexClick => {
+            console.log("indice clickeado " + indexClick)
+            if(indexClick === indexNow || indexClick === -1)
+                return
+            else if(indexClick > indexNow)
+                classToAdd = "show-slide-next"
+            else classToAdd = "show-slide-prev"
+            indexLast = indexNow
+            indexNow = indexClick
+
+            if(indexNow === 0){
+                itemsTitle[1].classList.remove("slide-active")
+                itemsTitle[0].classList.add(classToAdd)
+            } else if(indexNow === 3){
+                itemsTitle[0].classList.remove("slide-active")
+                itemsTitle[1].classList.add(classToAdd)
+            }
+            itemsInd[indexLast].classList.remove("indicator-active")
+            itemsInd[indexNow].classList.add("indicator-active")
+            itemsArt[indexLast].classList.remove("slide-active")
+            itemsArt[indexNow].classList.add(classToAdd)
+
+            itemsBG[indexLast].classList.remove("slide-active")
+            itemsBG[indexNow].classList.add(classToAdd)
         }
         containerBG.addEventListener('animationend', animationHandler)
-
+        containerInd.addEventListener('click', e => {
+            if (!isRunAnimation)
+                changeSlide(itemsInd.findIndex(elem => elem===e.target))
+        })
     </script>
 </body>
 </html>
