@@ -356,7 +356,7 @@
         let classToRemove = "",
             indexNow = 0,
             indexLast = totalItems - 1
-        const animationHandler = (e, arrayItems) => {
+        const animationHandler = e => {
             if(e.target.classList.value.indexOf("slide-active") > 0){
                 indexLast = indexNow
                 if(indexNow+1 < totalItems)
@@ -376,7 +376,7 @@
                 itemsArt[indexNow].classList.add("show-slide-next")
 
                 e.target.classList.remove("slide-active")
-                arrayItems[indexNow].classList.add("show-slide-next")
+                itemsBG[indexNow].classList.add("show-slide-next")
             } else {
                 classToRemove = [... e.target.classList].pop()
 
@@ -394,9 +394,7 @@
             }
 
         }
-        containerBG.addEventListener('animationend', e => {
-            animationHandler(e, itemsBG)
-        })
+        containerBG.addEventListener('animationend', animationHandler)
 
     </script>
 </body>
