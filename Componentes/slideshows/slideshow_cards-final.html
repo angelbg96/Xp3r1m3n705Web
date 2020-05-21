@@ -401,10 +401,10 @@
             } else {
                 classToRemove = [... e.target.classList].pop()
 
-                if(indexNow === 0){
+                if(indexNow < 3){
                     itemsTitle[0].classList.remove(classToRemove)
                     itemsTitle[0].classList.add("slide-active")
-                } else if(indexNow === 3){
+                } else{
                     itemsTitle[1].classList.remove(classToRemove)
                     itemsTitle[1].classList.add("slide-active")
                 }
@@ -427,10 +427,10 @@
             indexLast = indexNow
             indexNow = indexClick
 
-            if(indexNow === 0){
+            if(indexNow < 3){
                 itemsTitle[1].classList.remove("slide-active")
                 itemsTitle[0].classList.add(classToAdd)
-            } else if(indexNow === 3){
+            } else{
                 itemsTitle[0].classList.remove("slide-active")
                 itemsTitle[1].classList.add(classToAdd)
             }
