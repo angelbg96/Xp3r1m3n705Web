@@ -11,7 +11,7 @@
         :root{
             font-family: Arial, Helvetica, sans-serif;
             --width-slider: 100vw;
-            --transition-slider: 0.8s;
+            --transition-slider: 1.2s;
             --keepItem-slider: 5s;
         }
         body, body *, body *::before, body *::after {
@@ -34,6 +34,7 @@
         /* Estilos del carrusel de imagenes */
         .container-items{
             list-style: none;
+            background-color: black;
             width: 100%;
             height: calc(var(--width-slider) * 9 / 24);
             overflow: hidden;
@@ -123,8 +124,14 @@
             top: 0;
             left: 0;
             opacity: 0;
+        }
+        .slide-title, .slide-art {
             transition: z-index 10ms linear,
-                        opacity var(--transition-slider) linear;
+                        opacity calc(1.1*var(--transition-slider)) ease-out;
+        }
+        .slide-item {
+            transition: z-index 10ms linear,
+                        opacity calc(1.3*var(--transition-slider)) ease-in;
         }
         /* clases que generan las transiciones en slider */
         .show-slide-prev{
@@ -145,7 +152,6 @@
                         opacity 10ms linear;
             animation-name: keepShow;
             animation-duration: var(--keepItem-slider);
-            animation-fill-mode: forwards;
         }
         @keyframes fromRight {
             from{
@@ -296,7 +302,7 @@
         <div class="container-arts">
             <article class="slide-art slide-active">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    1. Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
                 <p>
                     Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum.
@@ -304,19 +310,19 @@
             </article>
             <article class="slide-art">
                 <p>
-                    Aliquam quo et mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    2. Aliquam quo et mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Culpa non, ducimus recusandae porro obcaecati blanditiis dolorum.
                 </p>
             </article>
             <article class="slide-art">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    3. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Ducimus recusandae porro obcaecati blanditiis dolorum.
                 </p>
             </article>
             <article class="slide-art">
                 <p>
-                    2. Lorem ipsum ducimus recusandae porro obcaecati amet  elit. 
+                    4. Lorem ipsum ducimus recusandae porro obcaecati amet  elit. 
                     Culpa non, dolor sit  consectetur adipisicing blanditiis dolorum.
                 </p>
             </article>
@@ -334,54 +340,64 @@
     <div style="margin-top: 200px; padding:2em;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum suscipit earum id impedit a quaerat qui, molestiae maxime temporibus voluptatibus accusantium quidem officiis, necessitatibus alias, tempore perspiciatis eveniet laudantium! Rem sapiente porro eius, sequi exercitationem nam, nihil aut, optio modi quasi corporis itaque error magnam minus mollitia iure nemo ut ipsam blanditiis nobis aperiam! Quod soluta deserunt nihil expedita assumenda ducimus maiores quaerat, est asperiores, sint aliquam quibusdam voluptate quidem nesciunt consequatur eum, porro optio vitae. Illo eligendi soluta odit deserunt laudantium libero ea cum voluptas explicabo nam ratione doloremque alias aspernatur, ullam cupiditate itaque quae fuga repellat, modi hic eos aliquam. Aut sint dolorem provident temporibus dolor optio ipsum adipisci delectus, pariatur eveniet earum tempora eos cupiditate sequi sunt sed deleniti. Laudantium assumenda aut impedit vitae, necessitatibus sint illo reprehenderit soluta commodi blanditiis sunt ullam magni quam eaque voluptas reiciendis ex ad hic amet! Laudantium unde molestias rem ullam, tempore maiores ipsa perferendis nam necessitatibus commodi voluptate delectus, modi voluptatibus quod. Impedit doloribus nam, repellendus veritatis fuga voluptatibus maxime itaque voluptates. Repudiandae fugit fugiat deleniti odit blanditiis error debitis cumque magni facere accusamus similique architecto, aut earum numquam nisi temporibus magnam, officiis adipisci corrupti! Saepe, voluptatibus. Iste labore magni illum eveniet accusamus suscipit voluptatem fugit itaque excepturi aperiam dicta, error fugiat atque at quasi porro vero voluptas dolor qui similique obcaecati impedit natus, pariatur necessitatibus? Placeat inventore laborum vero qui tempora voluptatem tenetur laudantium deleniti eligendi saepe nam labore, omnis expedita culpa ipsum quia veritatis iste fugiat? Dolorem minus qui beatae, modi perspiciatis suscipit voluptates velit a, recusandae asperiores numquam ad itaque necessitatibus commodi quos nemo sapiente nihil, aliquam sit accusantium! Consequuntur blanditiis repudiandae, quibusdam quod expedita alias incidunt error mollitia neque sint facere eius consectetur ab tempora exercitationem repellendus ut. Praesentium sapiente inventore nemo, animi voluptate impedit reprehenderit?</div>
     
     <script>
-        // let count = 0,
-        //     n = 0,
-        //     timeInterval = 5000,
-        //     elemenTitle = document.querySelector('.titles-list'),
-        //     itemsBG = [... document.querySelectorAll('.slide-item')],
-        //     itemsTitle = [... document.querySelectorAll('.slide-title')],
-        //     itemsArt = [... document.querySelectorAll('.slide-art')],
-        //     itemsInd = [... document.querySelectorAll('.indicator-item')]
-        // if(itemsBG && itemsTitle && itemsArt && elemenTitle && itemsInd){
-        //     n = itemsBG.length
+        const containerBG = document.querySelector(".slideshow .container-items"),
+            itemsBG = [... document.querySelectorAll('.slideshow .slide-item')],
+            itemsTitle = [... document.querySelectorAll('.slideshow .slide-title')],
+            itemsArt = [... document.querySelectorAll('.slideshow .slide-art')],
+            containerInd = document.querySelector(".indicators-list")
+        if(!containerBG && !itemsBG.length && !itemsTitle.length && !itemsArt.length && !containerInd)
+            throw 'Faltan Elementos en el DOM'
+        
+        const itemsInd = [... document.querySelectorAll('.slideshow .indicator-item')]
+        if(itemsBG.length !== itemsArt.length || itemsBG.length !== itemsInd.length)
+            throw 'No existe la misma cantidad de articulos, imagenes e indicadores'
+        
+        const totalItems = itemsBG.length
+        let classToRemove = "",
+            indexNow = 0,
+            indexLast = totalItems - 1
+        const animationHandler = (e, arrayItems) => {
+            if(e.target.classList.value.indexOf("slide-active") > 0){
+                indexLast = indexNow
+                if(indexNow+1 < totalItems)
+                    indexNow++
+                else indexNow = 0
 
-        //     elemenTitle.addEventListener('transitionend',e => {
-        //         console.log(e.target)
-        //         if(count == 0 || count == 3)
-        //             e.target.classList.remove('slide-prev')
-        //     })
+                if(indexNow === 0){
+                    itemsTitle[1].classList.remove("slide-active")
+                    itemsTitle[0].classList.add("show-slide-next")
+                } else if(indexNow === 3){
+                    itemsTitle[0].classList.remove("slide-active")
+                    itemsTitle[1].classList.add("show-slide-next")
+                }
+                itemsInd[indexLast].classList.remove("indicator-active")
+                itemsInd[indexNow].classList.add("indicator-active")
+                itemsArt[indexLast].classList.remove("slide-active")
+                itemsArt[indexNow].classList.add("show-slide-next")
 
-        //     setInterval(()=>{
-        //         if(count == 0){
-        //             itemsBG[n-1].classList.remove('slide-prev')
-        //             itemsArt[n-1].classList.remove('slide-prev')
-        //         }
-        //         else{
-        //             itemsBG[count-1].classList.remove('slide-prev')
-        //             itemsArt[count-1].classList.remove('slide-prev')
-        //         }
-        //         itemsBG[count].classList.add('slide-prev')
-        //         itemsBG[count].classList.remove('slide-active')
-        //         itemsArt[count].classList.add('slide-prev')
-        //         itemsArt[count].classList.remove('slide-active')
-        //         itemsInd[count].classList.remove('indicator-active')
-        //         if(count == n - 1){
-        //             count = -1
-        //             itemsTitle[0].classList.add('slide-active')
-        //             itemsTitle[1].classList.remove('slide-active')
-        //             itemsTitle[1].classList.add('slide-prev')
-        //         }
-        //         /* Para el cambio en  los titulos */
-        //         else if(count == 2){
-        //             itemsTitle[0].classList.add('slide-prev')
-        //             itemsTitle[0].classList.remove('slide-active')
-        //             itemsTitle[1].classList.add('slide-active')
-        //         }
-        //         itemsBG[++count].classList.add('slide-active')
-        //         itemsArt[count].classList.add('slide-active')
-        //         itemsInd[count].classList.add('indicator-active')
-        //     },timeInterval)
-        // }
+                e.target.classList.remove("slide-active")
+                arrayItems[indexNow].classList.add("show-slide-next")
+            } else {
+                classToRemove = [... e.target.classList].pop()
+
+                if(indexNow === 0){
+                    itemsTitle[0].classList.remove(classToRemove)
+                    itemsTitle[0].classList.add("slide-active")
+                } else if(indexNow === 3){
+                    itemsTitle[1].classList.remove(classToRemove)
+                    itemsTitle[1].classList.add("slide-active")
+                }
+                itemsArt[indexNow].classList.remove(classToRemove)
+                itemsArt[indexNow].classList.add("slide-active")
+                e.target.classList.remove(classToRemove)
+                e.target.classList.add("slide-active")
+            }
+
+        }
+        containerBG.addEventListener('animationend', e => {
+            animationHandler(e, itemsBG)
+        })
+
     </script>
 </body>
 </html>
