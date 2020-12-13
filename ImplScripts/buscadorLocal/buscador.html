@@ -280,7 +280,7 @@
             boxResults.classList.add('box-results--notEmpty')
             inputSearch.classList.add('DS__input--borderB')
         },
-        inputValueChange =  () => {
+        inputValueChange =  e => {
             if(!inputSearch.value.length) return
             else if(e.inputType === "insertText"){
                 if(e.data === ' ' && inputSearch.value[inputSearch.value.length-2] === ' '){
