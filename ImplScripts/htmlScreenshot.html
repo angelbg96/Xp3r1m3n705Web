@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de pantalla con JS</title>
+
+    <style>
+        body, body *, body *::before, body ::after {
+            padding: 0;
+            margin: 0;
+            outline-style: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 1.5em 3em;
+        }
+        hr {
+            margin: 1em 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5em;
+        }
+        .container-btns {
+            display: flex;
+            padding: 0 2em;
+            justify-content: space-around;
+        }
+        .container-btns button {
+            padding: 1em;
+        }
+        .video-wrap {
+            padding: 1em;
+            display: none;
+        }
+        .video-wrap__show {
+            display: block;
+        }
+        .video-wrap, #ctn_canvas {
+            max-width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Capturando pantalla &#x1F440;</h1>
+    <div class="container-btns">
+        <button id="btn_scrs">Captura la pantalla!</button>
+        <button id="btn_wbc">Captura webcam!</button>
+    </div>
+    <hr>
+    <div class="video-wrap">
+        <video id="video" playsinline="" autoplay="autoplay"></video>
+    </div>
+    <canvas id="ctn_canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("ctn_canvas"), 
+            context = canvas.getContext('2d')
+        /** Captura de pantalla **/
+        const a = navigator.mediaDevices.getDisplayMedia;
+        const takeSS = async() => {
+            const stream = await navigator.mediaDevices.getDisplayMedia({
+                video: {mediaSource: 'screen'}
+            })
+
+            const track = stream.getVideoTracks()[0]
+            const image = new ImageCapture(track)
+            const bitmap = await image.grabFrame()
+    
+            track.stop()
+    
+            canvas.width = bitmap.width
+            canvas.height = bitmap.height
+
+            contex.drawImage(bitmap, 0, 0, 790, bitmap.height/2)
+
+            const img = canvas.toDataURL()
+
+            const res = await fetch(img)
+            const buff = await res.arrayBuffer()
+
+            const file = [
+                new File([buff], `foto_${new Date()}.jpg`, {
+                    type: 'image/jpeg'
+                })
+            ]
+            return file
+        }
+
+        const botonSC = document.getElementById('btn_scrs')
+        botonSC.onclick = () => {
+            if(!window.ImageCapture){
+                alert("Hasta el momento solo compatible con Chromium")
+                a = null
+            }
+            return a ? takeSS() : {}
+        }
+
+        /** Captura Webcam **/
+        const elem = document.getElementById('video'),
+            botonWB = document.getElementById('btn_wbc')
+
+        const constraints = {
+            audio: false,
+            video: {width: 1280, height: 720}
+        }
+        // acceso a webcam
+        async function init() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints)
+                handleSuccess(stream)
+            } catch(e){
+                alert('Error: ' + e.toString)
+            }
+        }
+        // Acceso correcto
+        function handleSuccess(stream) {
+            window.stream = stream
+            video.srcObject = stream
+        }
+        
+        
+
+        botonWB.onclick = function() {
+            if(video.parentElement.classList.length == 1){
+                video.parentElement.classList.add('video-wrap__show')
+                // Inicia Proceso
+                init()
+            } else { // Dibuja imagen
+                context.drawImage(video, 0, 0, 640, 480)
+            }
+        }
+
+
+
+    </script>
+
+</body>
+</html>
