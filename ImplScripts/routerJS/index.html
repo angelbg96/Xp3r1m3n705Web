@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruteo JS</title>
+
+    <style>
+        body *, body *::before, body *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul>
+            <li><button onclick="router.loadRoute('ImplScripts/routerJS/')">Inicio</button></li>
+            <li><button onclick="router.loadRoute('ImplScripts/routerJS/contacto')">Contacto</button></li>
+            <li><button onclick="router.loadRoute('ImplScripts/routerJS/aboutme')">Sobre mi</button></li>
+        </ul>
+    </header>
+
+    <div id="data-router">
+        <h1>Hola mundo, Bienvenido</h1>
+    </div>
+
+    <script src="./js/router.js"></script>
+    <script src="./js/routes.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
