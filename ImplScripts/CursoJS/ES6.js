@@ -5,7 +5,7 @@ const condicionalCorto = () => {
 
 const getBoolean = (sup = 100, inf = 0) => {
     let numR = Math.random()
-    numR = Math.round(numR * sup + inf )
+    numR = Math.round(numR * (sup - inf) + inf )
     console.log(`El número es ${numR}`)
     return numR % 2 === 0 ? true : false
 }
